@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* ── Font Variables ───────────────────────────────────────────────────────── */
+
+@layer base {
+  :root {
+    --font-serif-family: var(--font-serif), "Playfair Display", Georgia, serif;
+    --font-heading-family: var(--font-heading), "Cormorant Garamond", serif;
+    --font-sans-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans-family);
+    background-color: #fbf9f4;
+    color: #27201b;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif-family);
+  }
+}
+
+/* ── Font Utilities ───────────────────────────────────────────────────────── */
+
+.font-serif  { font-family: var(--font-serif-family); }
+.font-heading { font-family: var(--font-heading-family); }
+.font-sans   { font-family: var(--font-sans-family); }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+.btn-amazon-primary {
+  background: linear-gradient(180deg, #173827 0%, #0e271a 100%);
+  color: #f6d483;
+  border: 1px solid rgba(227, 169, 56, 0.4);
+  box-shadow: 0 4px 14px rgba(17, 49, 35, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-amazon-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(17, 49, 35, 0.35);
+  border-color: rgba(227, 169, 56, 0.8);
+  color: #ffffff;
+}
+
+.btn-gold-primary {
+  background: linear-gradient(135deg, #e5ab37 0%, #f7cb68 50%, #d49520 100%);
+  color: #122b1c;
+  box-shadow: 0 4px 18px rgba(227, 169, 56, 0.4);
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-gold-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(227, 169, 56, 0.6);
+  filter: brightness(1.05);
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track  { background: #f4eee3; }
+::-webkit-scrollbar-thumb  { background: #c9b48b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a99264; }
