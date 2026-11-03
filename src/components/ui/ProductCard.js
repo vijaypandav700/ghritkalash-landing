@@ -2,18 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { ShoppingCart, CheckCircle2 } from "lucide-react";
+import { ShoppingCart, Star, Check, ShieldCheck, ExternalLink } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatINR, getDiscountPercent } from "@/lib/products";
 
-/**
- * ProductCard
- *
- * Displays a single product with its variant selector and Add to Cart action.
- * Self-contained: manages its own selected variant state.
- *
- * @param {{ product: import('@/lib/products').Product }} props
- */
 export default function ProductCard({ product }) {
   const { addItem, setIsOpen } = useCart();
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
@@ -21,130 +13,170 @@ export default function ProductCard({ product }) {
 
   const discount = getDiscountPercent(selectedVariant.mrp, selectedVariant.price);
 
-  function handleAddToCart() {
+  function handleAddToCart(e) {
+    e?.stopPropagation();
     addItem(product, selectedVariant);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1800);
-  }
-
-  function handleViewCart() {
-    addItem(product, selectedVariant);
-    setIsOpen(true);
+    setTimeout(() => {
+      setAdded(false);
+      setIsOpen(true);
+    }, 600);
   }
 
   return (
-    <div className="bg-white rounded-3xl border border-[#ebdcc4] shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col">
-      {/* Product Image */}
-      <div className="relative bg-[#fdf9f1]">
-        {product.badge && (
-          <span className="absolute top-4 left-4 z-10 bg-[#113123] text-[#f8e7b9] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-[#e4a938]/30">
-            {product.badge}
+    <div className="bg-white rounded-3xl border border-[#ebdcc4] shadow-[0_4px_20px_rgba(25,45,30,0.06)] hover:shadow-[0_12px_32px_rgba(25,45,30,0.12)] transition-all duration-300 overflow-hidden flex flex-col group card-gold-hover w-full max-w-xl mx-auto">
+      
+      {/* Product Image Area */}
+      <div className="relative bg-[#faf7ef] pt-6 px-6 pb-4 border-b border-[#f0e6d6]">
+        {/* Top Badges */}
+        <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5 items-start">
+          <span className="bg-[#0b3b24] text-[#f7e2a9] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-[#d4af37]/40 shadow-sm flex items-center gap-1">
+            <ShieldCheck className="w-3 h-3 text-[#ffd978]" />
+            <span>A2 Cow Ghee</span>
           </span>
-        )}
-        {selectedVariant.tag && (
-          <span className="absolute top-4 right-4 z-10 bg-[#e4a938] text-[#122b1c] text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
-            {selectedVariant.tag}
+          <span className="bg-[#e9f4ed] text-[#0b3b24] text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-[#c6e4d1]">
+            Traditional Bilona
           </span>
+        </div>
+
+        {/* Discount Badge on Right */}
+        {discount > 0 && (
+          <div className="absolute top-4 right-4 z-10 bg-[#e8a723] text-[#0b2b1b] text-[11px] font-black uppercase tracking-wider px-2.5 py-1 rounded-xl shadow-md">
+            {discount}% OFF
+          </div>
         )}
-        <div className="aspect-[4/3] relative">
+
+        {/* Product Image */}
+        <div className="aspect-[4/3] sm:aspect-square relative w-full overflow-hidden flex items-center justify-center">
           <Image
             src={product.image}
             alt={product.name}
             fill
-            className="object-contain p-6 hover:scale-105 transition-transform duration-500"
+            className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
             sizes="(max-width: 768px) 100vw, 50vw"
+            priority
           />
         </div>
       </div>
 
-      {/* Product Details */}
-      <div className="p-5 flex flex-col flex-1 gap-4">
-        {/* Name + Tagline */}
-        <div>
-          <h3 className="font-serif text-lg font-bold text-[#23180d] leading-snug">
-            {product.name}
-          </h3>
-          <p className="text-xs text-[#8b7654] mt-0.5 italic">{product.tagline}</p>
-        </div>
-
-        {/* Variant Selector */}
-        <div className="space-y-1.5">
-          <p className="text-[11px] font-semibold text-[#5a4e40] uppercase tracking-wider">
-            Select Size
-          </p>
-          <div className="flex gap-2">
-            {product.variants.map((v) => (
-              <button
-                key={v.id}
-                onClick={() => setSelectedVariant(v)}
-                className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold border-2 transition-all ${
-                  selectedVariant.id === v.id
-                    ? "border-[#113123] bg-[#113123] text-[#f6d483]"
-                    : "border-[#e0d0b8] bg-white text-[#5a4e40] hover:border-[#113123]/40"
-                }`}
-              >
-                {v.shortLabel}
-                <span className="block text-[10px] font-normal opacity-70 mt-0.5">
-                  {v.unit}
+      {/* Product Info & Actions */}
+      <div className="p-6 flex flex-col flex-1 gap-5 justify-between">
+        <div className="space-y-3">
+          {/* Ratings & Verification */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 bg-[#fdf5e2] px-2 py-0.5 rounded-md border border-[#f3d995]">
+                <Star className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
+                <span className="text-xs font-bold text-[#292017]">
+                  {product.rating}
                 </span>
-              </button>
-            ))}
-          </div>
-        </div>
+              </div>
+              <span className="text-[11px] text-[#736350] font-medium">
+                ({product.reviewsCount} ratings)
+              </span>
+            </div>
 
-        {/* Pricing */}
-        <div className="flex items-end gap-3">
+            <span className="text-[11px] font-bold text-[#0b3b24] bg-[#eef7f1] px-2.5 py-0.5 rounded-full border border-[#cbe5d5]">
+              100% Desi Cow Fat
+            </span>
+          </div>
+
+          {/* Title & Subtitle */}
           <div>
-            <p className="text-2xl font-bold text-[#23180d]">
-              {formatINR(selectedVariant.price)}
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#142d1f] leading-snug">
+              {product.name}
+            </h3>
+            <p className="text-xs text-[#0b3b24] font-semibold mt-1">
+              {product.subtitle}
             </p>
-            <p className="text-xs text-[#9c8c7a] line-through mt-0.5">
-              MRP {formatINR(selectedVariant.mrp)}
+            <p className="text-xs text-[#736553] mt-2 leading-relaxed">
+              {product.description}
             </p>
           </div>
-          <span className="mb-1 text-[11px] font-bold text-white bg-[#1a7c44] px-2 py-0.5 rounded-lg">
-            {discount}% OFF
-          </span>
+
+          {/* Size Selector */}
+          <div className="pt-2">
+            <p className="text-[11px] font-bold text-[#44382d] uppercase tracking-wider mb-2">
+              Select Size:
+            </p>
+
+            <div className="grid grid-cols-2 gap-3">
+              {product.variants.map((v) => {
+                const isSelected = selectedVariant.id === v.id;
+                return (
+                  <button
+                    key={v.id}
+                    type="button"
+                    onClick={() => setSelectedVariant(v)}
+                    className={`py-2.5 px-3 rounded-2xl text-left border-2 transition-all duration-200 ${
+                      isSelected
+                        ? "border-[#0b3b24] bg-[#0b3b24] text-white shadow-md"
+                        : "border-[#e5d8c4] bg-[#fdfbf7] text-[#3d3227] hover:border-[#0b3b24]/50"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold">{v.label}</span>
+                      <span className={`text-[10px] font-bold ${isSelected ? "text-[#ffd978]" : "text-[#09733c]"}`}>
+                        Save {getDiscountPercent(v.mrp, v.price)}%
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <span className={`text-sm font-black ${isSelected ? "text-[#fce8a9]" : "text-[#0b3b24]"}`}>
+                        {formatINR(v.price)}
+                      </span>
+                      <span className={`text-[11px] line-through ${isSelected ? "text-[#a0c5b1]" : "text-[#8a7a68]"}`}>
+                        {formatINR(v.mrp)}
+                      </span>
+                    </div>
+                    <div className={`text-[10px] mt-0.5 ${isSelected ? "text-[#d8ebd9]" : "text-[#8a7a68]"}`}>
+                      ({v.unitPrice})
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
-        {/* Highlights */}
-        <ul className="space-y-1">
-          {product.highlights.slice(0, 3).map((h) => (
-            <li key={h} className="flex items-center gap-1.5 text-[11px] text-[#5a4e40]">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#1a7c44] shrink-0" />
-              {h}
-            </li>
-          ))}
-        </ul>
+        {/* Pricing & Add to Cart */}
+        <div className="pt-3 border-t border-[#f0e6d6] space-y-3">
+          <div className="flex items-baseline justify-between">
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-black text-[#0b3b24]">
+                {formatINR(selectedVariant.price)}
+              </span>
+              <span className="text-sm text-[#8c7b68] line-through font-medium">
+                {formatINR(selectedVariant.mrp)}
+              </span>
+            </div>
+            <span className="text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-2.5 py-1 rounded-md">
+              Save {formatINR(selectedVariant.mrp - selectedVariant.price)} ({discount}% off)
+            </span>
+          </div>
 
-        {/* Actions */}
-        <div className="mt-auto flex gap-2 pt-1">
+          <p className="text-[11px] text-[#736350]">
+            Inclusive of all taxes &bull; {selectedVariant.unitPrice}
+          </p>
+
           <button
             onClick={handleAddToCart}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border-2 ${
+            className={`w-full py-4 px-4 rounded-full font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] ${
               added
-                ? "border-[#1a7c44] bg-[#eef5f0] text-[#1a7c44]"
-                : "border-[#113123] bg-white text-[#113123] hover:bg-[#113123] hover:text-[#f6d483]"
+                ? "bg-[#09733c] text-white"
+                : "btn-anveshan-primary"
             }`}
           >
             {added ? (
               <>
-                <CheckCircle2 className="w-4 h-4" />
-                Added!
+                <Check className="w-4 h-4 text-white" />
+                <span>Added to Shopping Bag!</span>
               </>
             ) : (
               <>
-                <ShoppingCart className="w-4 h-4" />
-                Add to Cart
+                <ShoppingCart className="w-4 h-4 text-[#ffd978]" />
+                <span>Add To Cart &bull; {formatINR(selectedVariant.price)}</span>
               </>
             )}
-          </button>
-
-          <button
-            onClick={handleViewCart}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold uppercase tracking-wider btn-amazon-primary"
-          >
-            Buy Now
           </button>
         </div>
       </div>

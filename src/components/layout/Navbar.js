@@ -1,59 +1,88 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Search, ShoppingBag, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, ShoppingBag, Menu, X, ChevronRight } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import MobileMenu from "@/components/layout/MobileMenu";
+import BrandLogo from "@/components/ui/BrandLogo";
 
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Our Story", href: "#why-a2" },
-  { label: "Why A2", href: "#why-a2" },
-  { label: "Bilona Process", href: "#bilona-process" },
-  { label: "Benefits", href: "#benefits" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Shop", href: "#shop" },
+const ANNOUNCEMENTS = [
+  "Pure A2 Desi Cow Milk · Traditional Bilona Method · Handcrafted",
+  "60+ Parameters Tested for Purity & Quality",
+  "Premium Glass Jar · Zero Plastic Contact · Rich Danedar Texture",
+  "Free Delivery on Orders Above ₹499 · Across India",
 ];
 
-/**
- * Navbar
- *
- * Sticky top navigation with logo, desktop links, search, cart icon and
- * a hamburger that opens the MobileMenu drawer.
- */
-export default function Navbar() {
+const NAV_LINKS = [
+  { label: "Order", href: "#order" },
+  { label: "Our Heritage", href: "#heritage" },
+  { label: "The Process", href: "#process" },
+  { label: "Nutrition", href: "#nutrition" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "FAQ", href: "#faq" },
+];
+
+export default function Navbar({ onOrderClick }) {
   const { totalQty, setIsOpen: setCartOpen } = useCart();
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [announcementIndex, setAnnouncementIndex] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAnnouncementIndex((prev) => (prev + 1) % ANNOUNCEMENTS.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#fbf9f4]/95 backdrop-blur-md border-b border-[#ece3d2]/80 shadow-[0_2px_12px_rgba(40,30,20,0.05)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      {/* ── Top Announcement Ticker ──────────────────────────────────────── */}
+      <div className="bg-[#0b3b24] text-white text-xs py-2 px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          <span className="text-[12px] font-medium tracking-wide text-[#d4eadc] text-center">
+            {ANNOUNCEMENTS[announcementIndex]}
+          </span>
+        </div>
+      </div>
 
-          {/* Logo */}
-          <Link href="/" className="flex flex-col items-center shrink-0 group" aria-label="GHRITKALASH home">
-            <div className="flex items-center gap-1 text-[#1b432e] group-hover:text-[#b87b14] transition-colors mb-0.5">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M19.5 8c-.3 0-.6.1-.8.2L16 6.5V5c0-.6-.4-1-1-1h-2c-.6 0-1 .4-1 1v1.5L9.3 8.2c-.2-.1-.5-.2-.8-.2C7.1 8 6 9.1 6 10.5V14c0 1.9 1.3 3.5 3 3.9V20c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-2h2v2c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-2.1c1.7-.4 3-2 3-3.9v-3.5c0-1.4-1.1-2.5-2.5-2.5zm-8.5 7c-.8 0-1.5-.7-1.5-1.5S10.2 12 11 12s1.5.7 1.5 1.5-.7 1.5-1.5 1.5zm5 0c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5 1.5.7 1.5 1.5-.7 1.5-1.5 1.5z" />
-              </svg>
-            </div>
-            <span className="font-serif text-xl font-bold tracking-[0.15em] text-[#1c2e22] uppercase group-hover:text-[#b87b14] transition-colors leading-none">
-              GHRITKALASH
-            </span>
-            <span className="text-[9px] tracking-[0.28em] font-semibold text-[#8b7654] uppercase">
-              Pure A2 Cow Ghee
-            </span>
+      {/* ── Main Sticky Header ───────────────────────────────────────────── */}
+      <header
+        className={`sticky top-0 z-40 bg-[#fdfaf4]/97 backdrop-blur-md border-b border-[#e8d9bb] transition-shadow ${
+          scrolled ? "shadow-sm" : ""
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+
+          {/* Hamburger – Mobile */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation menu"
+            className="lg:hidden p-2 text-[#0b3b24] hover:bg-[#e8d9bb]/50 rounded-xl transition-colors"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+
+          {/* Brand Logo */}
+          <Link href="/" className="shrink-0" aria-label="GHRITKALASH Home">
+            <BrandLogo variant="dark" size="md" />
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-[#3d3429]" aria-label="Main navigation">
+          {/* Desktop Nav Links */}
+          <nav className="hidden lg:flex items-center gap-7 text-[13px] font-medium text-[#3a3028]" aria-label="Main navigation">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="hover:text-[#133c27] transition-colors relative after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:w-0 after:bg-[#b87b14] after:transition-all hover:after:w-full pb-0.5"
+                className="hover:text-[#0b3b24] transition-colors py-1 border-b-2 border-transparent hover:border-[#c09320]"
               >
                 {link.label}
               </Link>
@@ -61,12 +90,12 @@ export default function Navbar() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {/* Search */}
             <button
               onClick={() => setSearchOpen((v) => !v)}
-              aria-label="Toggle search"
-              className="p-2.5 text-[#463b2f] hover:text-[#133c27] hover:bg-[#ebdcc4]/40 rounded-full transition-colors"
+              aria-label="Search"
+              className="p-2 text-[#3a3028] hover:text-[#0b3b24] hover:bg-[#e8d9bb]/50 rounded-full transition-colors"
             >
               <Search className="w-5 h-5" />
             </button>
@@ -74,56 +103,48 @@ export default function Navbar() {
             {/* Cart */}
             <button
               onClick={() => setCartOpen(true)}
-              aria-label={`Shopping cart (${totalQty} items)`}
-              className="relative p-2.5 text-[#463b2f] hover:text-[#133c27] hover:bg-[#ebdcc4]/40 rounded-full transition-colors"
+              aria-label={`Cart (${totalQty} items)`}
+              className="relative p-2 text-[#0b3b24] hover:bg-[#e8d9bb]/50 rounded-full transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
               {totalQty > 0 && (
-                <span className="absolute top-1 right-1 bg-[#133c27] text-white text-[9px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#0b3b24] text-[#ffd978] text-[10px] font-bold min-w-[17px] h-[17px] px-1 rounded-full flex items-center justify-center border-2 border-[#fdfaf4]">
                   {totalQty > 99 ? "99+" : totalQty}
                 </span>
               )}
             </button>
 
-            {/* Shop CTA – desktop */}
+            {/* Order CTA */}
             <a
-              href="#shop"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase btn-amazon-primary"
+              href="#order"
+              className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2 rounded-full text-xs font-bold tracking-wider uppercase btn-anveshan-primary"
             >
-              Shop Now
+              <span>Order Now</span>
+              <ChevronRight className="w-3.5 h-3.5" />
             </a>
-
-            {/* Hamburger – mobile only */}
-            <button
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
-              className="lg:hidden p-2.5 text-[#463b2f] hover:bg-[#ebdcc4]/40 rounded-full transition-colors"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
           </div>
         </div>
 
-        {/* Search Bar */}
+        {/* Search bar */}
         {searchOpen && (
-          <div className="border-t border-[#ece3d2] bg-[#fbf9f4] px-4 sm:px-6 py-3">
+          <div className="border-t border-[#e8d9bb] bg-[#fdfaf4] px-4 sm:px-6 py-3">
             <div className="max-w-7xl mx-auto flex items-center gap-3">
-              <Search className="w-4 h-4 text-[#8b7654] shrink-0" />
+              <Search className="w-4 h-4 text-[#8f7956] shrink-0" />
               <input
                 type="search"
-                placeholder="Search for A2 ghee, Bilona process…"
+                placeholder="Search GHRITKALASH A2 Cow Ghee, 500ml, 1 Litre..."
                 autoFocus
-                className="flex-1 bg-transparent text-sm text-[#2c221a] placeholder:text-[#b9a98c] focus:outline-none"
+                className="flex-1 bg-transparent text-sm text-[#1e1810] placeholder:text-[#ab9d85] focus:outline-none"
               />
-              <button onClick={() => setSearchOpen(false)} aria-label="Close search">
-                <X className="w-4 h-4 text-[#8b7654] hover:text-[#2c221a] transition-colors" />
+              <button onClick={() => setSearchOpen(false)} className="p-1 text-[#8f7956] hover:text-[#1e1810]">
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
         )}
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu */}
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
     </>
   );

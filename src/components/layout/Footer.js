@@ -1,100 +1,104 @@
 "use client";
 
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import BrandLogo from "@/components/ui/BrandLogo";
+import { PRODUCTS } from "@/lib/products";
+import { DesiCowIcon, BilonaChurnIcon, PuritySealIcon, GlassJarIcon } from "@/components/ui/Icons";
 
-const QUICK_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Our Story", href: "#why-a2" },
-  { label: "Bilona Process", href: "#bilona-process" },
-  { label: "Our Products", href: "#shop" },
-  { label: "Benefits", href: "#benefits" },
-  { label: "Reviews", href: "#reviews" },
+const PRODUCT = PRODUCTS[0];
+
+const PAGE_LINKS = [
+  { label: "Order Now", href: "#order" },
+  { label: "Our Heritage", href: "#heritage" },
+  { label: "The Bilona Process", href: "#process" },
+  { label: "Nutritional Info", href: "#nutrition" },
+  { label: "Customer Reviews", href: "#reviews" },
+  { label: "FAQs", href: "#faq" },
 ];
 
-const HELP_LINKS = [
-  { label: "FAQ", action: "faq" },
-  { label: "Shipping & Returns", action: "shipping" },
-  { label: "Contact Us", action: "contact" },
-];
-
-const SOCIAL = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-      </svg>
-    ),
-  },
-  {
-    label: "Facebook",
-    href: "https://facebook.com",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-      </svg>
-    ),
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
-        <polygon points="10 15 15 12 10 9 10 15" />
-      </svg>
-    ),
-  },
-];
-
-/**
- * Footer
- *
- * Static footer component — no cart/toast dependencies.
- *
- * @param {{ onHelpClick?: (action: string) => void }} props
- */
-export default function Footer({ onHelpClick }) {
+export default function Footer() {
   return (
-    <footer className="bg-[#091f14] text-[#d3e2d8] pt-14 pb-10 border-t border-[#1d402e]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#1b3d2c]">
+    <footer className="bg-[#0a2617] text-[#c8dece]">
+
+      {/* Trust strip */}
+      <div className="border-b border-[#1a4a2e]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              {
+                icon: <DesiCowIcon className="w-7 h-7 text-[#ffd978]" />,
+                title: "100% Pure A2 Cow Milk",
+                desc: "Sourced from grass-fed indigenous desi cows",
+              },
+              {
+                icon: <BilonaChurnIcon className="w-7 h-7 text-[#ffd978]" />,
+                title: "Traditional Bilona",
+                desc: "Hand-churned from curd using wooden churner",
+              },
+              {
+                icon: <PuritySealIcon className="w-7 h-7 text-[#ffd978]" />,
+                title: "60+ Parameters Tested",
+                desc: "Every batch lab-verified for purity and aroma",
+              },
+              {
+                icon: <GlassJarIcon className="w-7 h-7 text-[#ffd978]" />,
+                title: "Glass Jar Packaging",
+                desc: "Zero plastic contact for authentic Danedar goodness",
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-3.5">
+                <div className="p-2 rounded-xl bg-[#0f3c27] border border-[#1d5e3d] shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-[#faf5e8]">{item.title}</p>
+                  <p className="text-xs text-[#8cbfa4] mt-0.5 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main footer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
 
           {/* Brand */}
-          <div className="space-y-4">
-            <div>
-              <span className="font-serif text-2xl font-bold tracking-[0.18em] text-[#f7ecd0] uppercase block">
-                GHRITKALASH
-              </span>
-              <span className="text-[10px] tracking-[0.28em] font-semibold text-[#e4a938] uppercase">
-                Pure A2 Cow Ghee
-              </span>
-            </div>
-            <p className="text-xs text-[#a2bbaa] leading-relaxed">
-              Crafted in small batches through Vedic Bilona churning of curd from
-              grass-fed indigenous Indian cows.
+          <div className="md:col-span-5 space-y-4">
+            <BrandLogo variant="light" size="md" />
+            <p className="text-sm text-[#9abfac] leading-relaxed max-w-sm mt-3">
+              GHRITKALASH is crafted using the revered Bilona process — where curd is hand-churned
+              into makhan and slowly simmered to create rich, aromatic golden ghee. Pure.
+              Traditional. Trusted.
             </p>
-            <div className="flex items-center gap-1.5 text-[#e4a938] text-xs">
-              <Heart className="w-3.5 h-3.5 fill-current" />
-              <span>Made with love in India</span>
+
+            <div className="pt-2 space-y-2 text-sm">
+              <a href={`tel:${PRODUCT.phone}`} className="flex items-center gap-2.5 text-[#9abfac] hover:text-[#ffd978] transition-colors group">
+                <Phone className="w-4 h-4 text-[#ffd978] shrink-0" />
+                <span>{PRODUCT.phone}</span>
+              </a>
+              <a href={`mailto:${PRODUCT.email}`} className="flex items-center gap-2.5 text-[#9abfac] hover:text-[#ffd978] transition-colors">
+                <Mail className="w-4 h-4 text-[#ffd978] shrink-0" />
+                <span>{PRODUCT.email}</span>
+              </a>
+              <div className="flex items-start gap-2.5 text-[#9abfac]">
+                <MapPin className="w-4 h-4 text-[#ffd978] shrink-0 mt-0.5" />
+                <span className="leading-relaxed">{PRODUCT.address}</span>
+              </div>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold text-[#f8e7b9] uppercase tracking-wider">
-              Quick Links
-            </h4>
-            <ul className="space-y-2">
-              {QUICK_LINKS.map((l) => (
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="text-xs font-bold text-[#ffd978] uppercase tracking-[0.2em]">Quick Links</h4>
+            <ul className="space-y-2.5">
+              {PAGE_LINKS.map((l) => (
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-xs text-[#a5bfb0] hover:text-[#e4a938] transition-colors"
+                    className="text-sm text-[#9abfac] hover:text-[#ffd978] transition-colors"
                   >
                     {l.label}
                   </Link>
@@ -103,52 +107,37 @@ export default function Footer({ onHelpClick }) {
             </ul>
           </div>
 
-          {/* Help */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold text-[#f8e7b9] uppercase tracking-wider">Help</h4>
-            <ul className="space-y-2">
-              {HELP_LINKS.map((l) => (
-                <li key={l.label}>
-                  <button
-                    onClick={() => onHelpClick?.(l.action)}
-                    className="text-xs text-[#a5bfb0] hover:text-[#e4a938] transition-colors text-left"
-                  >
-                    {l.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold text-[#f8e7b9] uppercase tracking-wider">
-              Stay Connected
-            </h4>
-            <div className="flex gap-3">
-              {SOCIAL.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.label}
-                  className="w-9 h-9 rounded-full border border-[#23503a] flex items-center justify-center text-[#a5bfb0] hover:text-[#e4a938] hover:border-[#e4a938] transition-all"
-                >
-                  {s.icon}
-                </a>
-              ))}
+          {/* Product info */}
+          <div className="md:col-span-4 space-y-3">
+            <h4 className="text-xs font-bold text-[#ffd978] uppercase tracking-[0.2em]">Product Details</h4>
+            <div className="space-y-2 text-sm text-[#9abfac]">
+              <p><span className="text-[#faf5e8] font-semibold">Brand:</span> GHRITKALASH</p>
+              <p><span className="text-[#faf5e8] font-semibold">Ingredient:</span> {PRODUCT.ingredient}</p>
+              <p><span className="text-[#faf5e8] font-semibold">Allergen:</span> {PRODUCT.allergenInfo}</p>
+              <p><span className="text-[#faf5e8] font-semibold">Storage:</span> {PRODUCT.storage}</p>
+              <p><span className="text-[#faf5e8] font-semibold">Made in:</span> {PRODUCT.countryOfOrigin}</p>
+              <p><span className="text-[#faf5e8] font-semibold">Manufacturer:</span> {PRODUCT.manufacturer}</p>
             </div>
-            <p className="text-[11px] text-[#6d8f7c]">
-              Secure payments powered by Razorpay
-            </p>
+
+            <div className="mt-4 p-4 rounded-xl bg-[#0f3c27] border border-[#1d5e3d]">
+              <p className="text-xs font-bold text-[#faf5e8] mb-1">Available In</p>
+              <div className="flex gap-2 flex-wrap mt-2">
+                {PRODUCT.variants.map((v) => (
+                  <span key={v.id} className="text-xs bg-[#1a5537] text-[#c8dece] px-3 py-1 rounded-full border border-[#286645]">
+                    {v.label}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Bottom bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[#789684]">
-          <p>&copy; 2026 GHRITKALASH. All Rights Reserved.</p>
-          <p>Authentic Vedic A2 Desi Cow Ghee &bull; Pure Tradition. Healthier Tomorrow.</p>
+      {/* Bottom bar */}
+      <div className="border-t border-[#1a4a2e]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-24 sm:pb-20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6a9a80]">
+          <p>© 2026 GHRITKALASH ENTERPRISES. All Rights Reserved. Made in India 🇮🇳</p>
+          <p className="text-[11px]">Pure · Traditional · Trusted</p>
         </div>
       </div>
     </footer>

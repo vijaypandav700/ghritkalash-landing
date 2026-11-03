@@ -1,12 +1,19 @@
 @import "tailwindcss";
 
-/* ── Font Variables ───────────────────────────────────────────────────────── */
+/* ── Color & Font Tokens ─────────────────────────────────────────────────── */
 
 @layer base {
   :root {
     --font-serif-family: var(--font-serif), "Playfair Display", Georgia, serif;
     --font-heading-family: var(--font-heading), "Cormorant Garamond", serif;
     --font-sans-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    --brand-emerald: #0b3b24;
+    --brand-emerald-dark: #072819;
+    --brand-emerald-light: #165637;
+    --brand-gold: #d4af37;
+    --brand-gold-warm: #c59728;
+    --brand-cream: #fcf9f2;
   }
 
   body {
@@ -26,19 +33,51 @@
 .font-heading { font-family: var(--font-heading-family); }
 .font-sans   { font-family: var(--font-sans-family); }
 
-/* ── Buttons ─────────────────────────────────────────────────────────────── */
+/* ── Buttons (Anveshan & Luxury Ayurvedic Theme) ─────────────────────────── */
 
-.btn-amazon-primary {
-  background: linear-gradient(180deg, #173827 0%, #0e271a 100%);
-  color: #f6d483;
-  border: 1px solid rgba(227, 169, 56, 0.4);
-  box-shadow: 0 4px 14px rgba(17, 49, 35, 0.25);
+.btn-anveshan-primary {
+  background: linear-gradient(135deg, #0b3b24 0%, #062618 100%) !important;
+  color: #ffd978 !important;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 4px 16px rgba(11, 59, 36, 0.28);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.btn-amazon-primary:hover:not(:disabled) {
+.btn-anveshan-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(17, 49, 35, 0.35);
-  border-color: rgba(227, 169, 56, 0.8);
+  box-shadow: 0 8px 26px rgba(11, 59, 36, 0.38);
+  border-color: rgba(212, 175, 55, 0.9);
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #104e31 0%, #093320 100%) !important;
+}
+.btn-anveshan-primary svg {
+  color: #ffd978 !important;
+}
+
+.btn-anveshan-gold {
+  background: linear-gradient(135deg, #e5b842 0%, #f6cb65 40%, #c99324 100%) !important;
+  color: #072417 !important;
+  border: 1px solid rgba(255, 230, 150, 0.6);
+  box-shadow: 0 4px 18px rgba(201, 147, 36, 0.35);
+  font-weight: 700;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-anveshan-gold:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201, 147, 36, 0.55);
+  filter: brightness(1.05);
+}
+
+.btn-emerald-secondary {
+  background: linear-gradient(180deg, #103c27 0%, #082417 100%);
+  color: #f7d78a;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 14px rgba(16, 60, 39, 0.25);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-emerald-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(16, 60, 39, 0.35);
+  border-color: rgba(212, 175, 55, 0.8);
   color: #ffffff;
 }
 
@@ -55,6 +94,32 @@
   filter: brightness(1.05);
 }
 
+/* ── Glow & Card Effects ─────────────────────────────────────────────────── */
+
+.card-gold-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-gold-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -10px rgba(11, 59, 36, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.35);
+}
+
+/* ── Ticker & Marquee ────────────────────────────────────────────────────── */
+
+@keyframes marqueeSlow {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marqueeSlow 32s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* ── Animations ──────────────────────────────────────────────────────────── */
 
 @keyframes slide-up {
@@ -68,7 +133,7 @@
 
 /* ── Scrollbar ───────────────────────────────────────────────────────────── */
 
-::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar       { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track  { background: #f4eee3; }
-::-webkit-scrollbar-thumb  { background: #c9b48b; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #a99264; }
+::-webkit-scrollbar-thumb  { background: #c5a872; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #9e7f45; }

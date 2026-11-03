@@ -3,254 +3,398 @@
 import { useState } from "react";
 import Image from "next/image";
 import {
-  Sparkles,
-  FlaskConical,
-  Heart,
-  Shield,
-  Activity,
-  Brain,
-  Droplet,
-  Bone,
+  Star,
+  ShoppingBag,
+  ChevronDown,
+  ChevronUp,
   ChevronLeft,
   ChevronRight,
-  Star,
   ArrowRight,
-  ShoppingBag,
+  Check,
+  Phone,
+  Mail,
+  MapPin,
+  Sparkles,
+  Info,
 } from "lucide-react";
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartSidebar from "@/components/layout/CartSidebar";
 import Toast from "@/components/ui/Toast";
-import ProductCard from "@/components/ui/ProductCard";
 import BilonaModal from "@/components/BilonaModal";
-import { PRODUCTS } from "@/lib/products";
+import { PRODUCTS, formatINR, getDiscountPercent } from "@/lib/products";
 import { useCart } from "@/context/CartContext";
+import {
+  DesiCowIcon,
+  BilonaChurnIcon,
+  DanedarGheeIcon,
+  PuritySealIcon,
+  GlassJarIcon,
+  SingleIngredientIcon,
+  SlowFlameIcon,
+  CurdPotIcon,
+} from "@/components/ui/Icons";
 
-const REVIEWS = [
+const PRODUCT = PRODUCTS[0];
+
+const GALLERY_ITEMS = [
+  {
+    src: PRODUCT.image,
+    label: "Front Jar",
+    caption: "GHRITKALASH Pure A2 Desi Cow Ghee – 500 ml / 1 Litre Glass Jar",
+    tag: "Authentic Jar",
+  },
+  {
+    src: PRODUCT.heroImage,
+    label: "Tradition & Craft",
+    caption: "Bring Home The Richness of Tradition – Bilona Handcrafted Ghee",
+    tag: "Brand Craft",
+  },
+  {
+    src: PRODUCT.nutritionImage,
+    label: "Nutrition Label",
+    caption: "Nutritional Information – Tested for 15 Parameters (99.84g Pure Fat)",
+    tag: "Certified Label",
+  },
+  {
+    src: PRODUCT.heritageImage,
+    label: "Our Heritage",
+    caption: "Rooted in Ancient Traditions – GHRITKALASH ENTERPRISES, Pune",
+    tag: "Brand Story",
+  },
+  {
+    src: PRODUCT.lifestyleImage,
+    label: "Danedar Texture",
+    caption: "A Golden Standard of Simplicity – Granular Danedar Texture",
+    tag: "Pure Texture",
+  },
+];
+
+const BILONA_STEPS = [
+  {
+    step: "01",
+    title: "Pure A2 Desi Cow Milk",
+    desc: "Sourced from indigenous Desi cows grazing on natural pastures, free of A1 beta-casein.",
+    icon: <DesiCowIcon className="w-6 h-6 text-[#0b3b24]" />,
+  },
+  {
+    step: "02",
+    title: "Cultured into Curd",
+    desc: "Fresh whole milk is gently boiled and naturally cultured overnight into rich, thick curd.",
+    icon: <CurdPotIcon className="w-6 h-6 text-[#0b3b24]" />,
+  },
+  {
+    step: "03",
+    title: "Two-Way Bilona Churning",
+    desc: "Curd is traditionally hand-churned bidirectionally with a wooden churner (Mathani) to extract makkhan.",
+    icon: <BilonaChurnIcon className="w-6 h-6 text-[#0b3b24]" />,
+  },
+  {
+    step: "04",
+    title: "Fresh Makkhan Separated",
+    desc: "Pure white cultured butter (makkhan) is carefully skimmed away from probiotic buttermilk.",
+    icon: <SingleIngredientIcon className="w-6 h-6 text-[#0b3b24]" />,
+  },
+  {
+    step: "05",
+    title: "Slow Simmered to Gold",
+    desc: "Makkhan is gently heated on low flame until golden, aromatic, granular Danedar Ghee crystallizes.",
+    icon: <SlowFlameIcon className="w-6 h-6 text-[#0b3b24]" />,
+  },
+];
+
+const BRAND_PILLARS = [
+  {
+    icon: <DesiCowIcon className="w-6 h-6 text-[#0b3b24]" />,
+    title: "100% Pure A2 Cow Milk",
+    desc: "Pure desi cow milk fat. No adulteration, no artificial colour, no preservatives.",
+  },
+  {
+    icon: <BilonaChurnIcon className="w-6 h-6 text-[#0b3b24]" />,
+    title: "Traditional Bilona Method",
+    desc: "Handcrafted from curd — never direct industrial cream — preserving vital enzymes.",
+  },
+  {
+    icon: <PuritySealIcon className="w-6 h-6 text-[#0b3b24]" />,
+    title: "60+ Parameters Tested",
+    desc: "Strictly tested in accredited food laboratories for purity, safety, and nutritional profile.",
+  },
+  {
+    icon: <GlassJarIcon className="w-6 h-6 text-[#0b3b24]" />,
+    title: "Zero-Plastic Glass Jar",
+    desc: "Packed in premium airtight food-grade glass jars to preserve taste, aroma, and nutrients.",
+  },
+];
+
+const CUSTOMER_REVIEWS = [
   {
     stars: 5,
-    text: "The aroma of this ghee takes me back to my grandmother's home in Rajasthan. True authentic Danedar texture. Absolutely pure!",
-    author: "Pooja Sharma",
+    title: "Authentic Danedar Texture & Real Aroma",
+    text: "The Danedar granular texture is immediately apparent the moment you open the lid. The aroma reminds me of authentic village-churned bilona ghee from childhood. Melted over hot rotis and dal, the flavor is deeply rich and comforting.",
+    author: "Arvind K.",
     location: "Jaipur, Rajasthan",
+    initials: "AK",
   },
   {
     stars: 5,
-    text: "Switched to GHRITKALASH for my daily Ayurvedic routine and digestion. The light, pure taste is incomparable to supermarket brands.",
-    author: "Dr. Arvind Kulkarni",
+    title: "Best Ghee for Family Cooking & Children",
+    text: "We switched to GHRITKALASH for daily cooking six months ago. It is light, easy to digest, and adds a natural golden aroma to our food. Knowing it is cultured from curd with zero additives gives our family total peace of mind.",
+    author: "Pooja S.",
     location: "Pune, Maharashtra",
+    initials: "PS",
   },
   {
     stars: 5,
-    text: "Being a mother, I only want the purest for my kids. The bilona hand-churned method and glass jar packaging show their deep commitment to quality.",
-    author: "Meera Patel",
+    title: "Pristine Glass Packaging & Secure Delivery",
+    text: "The glass jar arrived intact in sturdy protective packaging. Glass makes a tremendous difference compared to plastic containers because there is zero chemical smell. The 1 Litre jar is excellent value for everyday home use.",
+    author: "Meera P.",
     location: "Ahmedabad, Gujarat",
+    initials: "MP",
   },
   {
     stars: 5,
-    text: "Remarkable aroma when added to hot dal and parathas. The 2-jar bundle is amazing value. Definitely subscribing regularly!",
-    author: "Rajeshwar Rao",
+    title: "Pure Unsalted Ghee with Rich Golden Color",
+    text: "You can tell genuine Bilona ghee by how cleanly it melts without leaving a sticky or oily residue on your palate. The natural nutty fragrance and golden hue prove this is true handcrafted ghee.",
+    author: "Rajeshwar R.",
     location: "Bengaluru, Karnataka",
+    initials: "RR",
+  },
+];
+
+const FAQS = [
+  {
+    q: "What makes GHRITKALASH A2 Cow Ghee different from commercial ghee?",
+    a: "Commercial ghee is made by skimming cream directly from mixed milk and boiling it at high temperatures. In contrast, GHRITKALASH follows the traditional Vedic Bilona method: fresh A2 Desi cow milk is first cultured into curd, hand-churned with a wooden churner (Mathani) to extract makkhan, and then slow-simmered on low flame into golden, granular Danedar Ghee. This preserves vital fatty acids like butyric acid and natural fat-soluble vitamins.",
+  },
+  {
+    q: "Why is A2 milk from indigenous Desi cows better?",
+    a: "Desi cows produce only the A2 beta-casein protein variant, which is easily recognized and broken down by human digestive enzymes. A1 milk from crossbred cows contains a peptide that can cause digestive distress and bloating. GHRITKALASH sources exclusively from indigenous Desi cows.",
+  },
+  {
+    q: "What is Danedar texture and why is it important?",
+    a: "Danedar (granular) texture is the natural crystalline structure that forms when pure ghee cools slowly after gentle simmering. It is the hallmark of genuine Bilona ghee. Industrial and adulterated vegetable-fat ghees lack this natural crystalline texture.",
+  },
+  {
+    q: "How should I store GHRITKALASH Ghee?",
+    a: "Store the glass jar at room temperature in a cool, dry place away from direct sunlight and humidity. Do not refrigerate. Ghee has a naturally long shelf life. Always use a clean, dry stainless steel or wooden spoon.",
+  },
+  {
+    q: "What are the ingredients and allergen details?",
+    a: "Single ingredient: 100% Pure Desi Cow Milk Fat. Contains no artificial colors, preservatives, or added salt. Allergen warning: Contains Milk.",
+  },
+  {
+    q: "What are the recommended culinary and daily uses?",
+    a: "Ideal for everyday cooking, tempering (tadka), drizzling over hot dal, khichdi, roti, and rice. Excellent for traditional festive sweets and Ayurveda practices like having a warm spoonful on an empty stomach.",
   },
 ];
 
 export default function Home() {
-  const { setIsOpen: setCartOpen, showToast } = useCart();
-  const [processModalOpen, setProcessModalOpen] = useState(false);
-  const [activeReviewIndex, setActiveReviewIndex] = useState(0);
+  const { setIsOpen: setCartOpen, addItem } = useCart();
+  const [selectedVariant, setSelectedVariant] = useState(PRODUCT.variants[0]);
+  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState(0);
+  const [activeTab, setActiveTab] = useState("description");
+  const [bilonaModalOpen, setBilonaModalOpen] = useState(false);
 
-  const handleNextReview = () => {
-    setActiveReviewIndex((prev) => (prev + 1) % REVIEWS.length);
+  const discount = getDiscountPercent(selectedVariant.mrp, selectedVariant.price);
+
+  const handleAddToCart = () => {
+    addItem(PRODUCT, selectedVariant);
+    setAddedToCart(true);
+    setTimeout(() => {
+      setAddedToCart(false);
+      setCartOpen(true);
+    }, 600);
   };
 
-  const handlePrevReview = () => {
-    setActiveReviewIndex((prev) => (prev - 1 + REVIEWS.length) % REVIEWS.length);
+  const scrollToOrder = () => {
+    document.getElementById("order")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToShop = () => {
-    document.getElementById("shop")?.scrollIntoView({ behavior: "smooth" });
+  const prevImage = () => {
+    setActiveImageIdx((prev) => (prev === 0 ? GALLERY_ITEMS.length - 1 : prev - 1));
   };
 
-  const handleHelpClick = (action) => {
-    if (action === "faq") {
-      showToast("FAQs: Pure A2 Gir Cow Ghee, hand-churned in clay pots using Vedic Bilona.");
-    } else if (action === "shipping") {
-      showToast("Free express shipping across India on orders with 2 or more jars!");
-    } else if (action === "contact") {
-      showToast("Reach out to us: support@ghritkalash.com | +91 98765 43210");
-    }
+  const nextImage = () => {
+    setActiveImageIdx((prev) => (prev === GALLERY_ITEMS.length - 1 ? 0 : prev + 1));
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f4] text-[#27201b] selection:bg-[#e4a938] selection:text-[#122b1c]">
-      {/* Navigation */}
-      <Navbar />
-
-      {/* Global Slide-Over Cart Drawer */}
+    <div className="min-h-screen flex flex-col bg-[#fbf9f4] text-[#221c16]">
+      <Navbar onOrderClick={scrollToOrder} />
       <CartSidebar />
-
-      {/* Toast Notification */}
       <Toast />
-
-      {/* Bilona 5-Step Process Modal */}
       <BilonaModal
-        isOpen={processModalOpen}
-        onClose={() => setProcessModalOpen(false)}
-        onShopNow={() => {
-          setProcessModalOpen(false);
-          scrollToShop();
-        }}
+        isOpen={bilonaModalOpen}
+        onClose={() => setBilonaModalOpen(false)}
+        onShopNow={scrollToOrder}
       />
 
       <main className="flex-1">
-        {/* ── SECTION 1: HERO ─────────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden pt-6 sm:pt-10 pb-16 lg:pb-24">
-          {/* Farm Background — high visibility with rich natural contrast */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute inset-0 opacity-[0.88]">
-              <Image
-                src="/images/hero-farm-bg.jpg"
-                alt="Organic Indian dairy farm green pasture background"
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover object-top filter saturate-115 brightness-105"
-              />
-            </div>
-            {/* Smooth gradient blends so content stays legible while background is clearly visible */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#fbf9f4]/92 via-[#fbf9f4]/60 to-transparent sm:via-[#fbf9f4]/45" />
-            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#fbf9f4] via-[#fbf9f4]/60 to-transparent" />
-            <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-[#fbf9f4]/80 to-transparent" />
-          </div>
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
-              {/* Left Content Column */}
-              <div className="lg:col-span-7 pt-4 sm:pt-8 space-y-6">
-                {/* Overline tag */}
-                <div className="inline-flex items-center gap-2">
-                  <span className="text-[11px] sm:text-xs font-bold tracking-[0.25em] text-[#1b432e] uppercase">
-                    Traditional &bull; Pure &bull; Nutritious
-                  </span>
+        {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
+        <section className="relative bg-gradient-to-b from-[#fdf7e9] via-[#fbf8f0] to-[#f7f2e4] border-b border-[#e8d8be] overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+              {/* Left Column – Brand Story & Value Proposition */}
+              <div className="lg:col-span-7 space-y-6">
+                
+                {/* Eyebrow Badge */}
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#eef7f1] border border-[#cbe4d4] text-[#0b3b24] text-xs font-bold uppercase tracking-widest">
+                  <span className="w-2 h-2 rounded-full bg-[#0b3b24]" />
+                  <span>Traditional Bilona · Pure A2 Cow Ghee</span>
                 </div>
 
-                {/* Main Headline */}
-                <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.12] text-[#241a12] font-semibold tracking-tight drop-shadow-sm">
-                  Ancient Tradition.
-                  <span className="block text-[#a86e1a] font-normal italic mt-1 font-heading text-[1.08em]">
-                    Pure Golden Goodness.
-                  </span>
-                </h1>
+                {/* Main Heading */}
+                <div>
+                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0c2f1e] leading-[1.1] tracking-tight">
+                    Bring Home
+                    <br />
+                    The Richness{" "}
+                    <span className="text-[#b58718] italic font-normal">of Pure Tradition</span>
+                  </h1>
+                </div>
 
-                {/* Subtitle */}
-                <p className="text-base sm:text-lg text-[#52463b] max-w-xl font-normal leading-relaxed">
-                  GHRITKALASH Pure A2 Cow Ghee is crafted using the sacred Bilona method,
-                  bringing you the richness of Vedic tradition in its purest golden form.
+                {/* Subtitle / Description */}
+                <p className="text-base sm:text-lg text-[#554737] leading-relaxed max-w-xl">
+                  Crafted using the revered Vedic Bilona method — cultured from pure desi cow milk curd,
+                  hand-churned with a wooden bilona to extract fresh makkhan, and gently slow-simmered
+                  into golden, aromatic Danedar Ghee.
                 </p>
 
-                {/* 4 Feature Badges */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-3 pt-2">
-                  <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/85 backdrop-blur-sm border border-[#e8dbc4]/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="w-11 h-11 rounded-full bg-[#eef5f0] border border-[#d2e5d7] flex items-center justify-center text-[#18422d] mb-2 shadow-inner">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                        <path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7c5 0 7 7 7 7s-2 7-7 7Z" />
-                        <path d="M11 20V6" />
-                      </svg>
+                {/* 4 Bespoke Trust Icons (No random emojis, authentic SVGs) */}
+                <div className="grid grid-cols-2 gap-3.5 pt-2 max-w-lg">
+                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <DesiCowIcon className="w-5 h-5 text-[#0b3b24]" />
                     </div>
-                    <span className="text-xs font-semibold text-[#292017] leading-tight">100% Pure</span>
-                    <span className="text-[11px] text-[#786b5c]">A2 Cow Ghee</span>
+                    <div>
+                      <p className="text-xs font-bold text-[#0c2f1e]">100% Pure A2 Milk</p>
+                      <p className="text-[11px] text-[#71614f]">Indigenous Desi Cows</p>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/85 backdrop-blur-sm border border-[#e8dbc4]/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="w-11 h-11 rounded-full bg-[#eef5f0] border border-[#d2e5d7] flex items-center justify-center text-[#18422d] mb-2 shadow-inner">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                        <circle cx="12" cy="12" r="3" />
-                        <path d="M12 3v3m0 12v3M3 12h3m12 0h3" />
-                        <circle cx="12" cy="12" r="8" />
-                      </svg>
+                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <BilonaChurnIcon className="w-5 h-5 text-[#0b3b24]" />
                     </div>
-                    <span className="text-xs font-semibold text-[#292017] leading-tight">Traditional</span>
-                    <span className="text-[11px] text-[#786b5c]">Bilona Method</span>
+                    <div>
+                      <p className="text-xs font-bold text-[#0c2f1e]">Traditional Bilona</p>
+                      <p className="text-[11px] text-[#71614f]">Hand-churned from curd</p>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/85 backdrop-blur-sm border border-[#e8dbc4]/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="w-11 h-11 rounded-full bg-[#eef5f0] border border-[#d2e5d7] flex items-center justify-center text-[#18422d] mb-2 shadow-inner">
-                      <FlaskConical className="w-5 h-5 text-[#18422d]" />
+                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <PuritySealIcon className="w-5 h-5 text-[#0b3b24]" />
                     </div>
-                    <span className="text-xs font-semibold text-[#292017] leading-tight">Lab-Tested</span>
-                    <span className="text-[11px] text-[#786b5c]">&amp; Certified</span>
+                    <div>
+                      <p className="text-xs font-bold text-[#0c2f1e]">60+ Tested</p>
+                      <p className="text-[11px] text-[#71614f]">Lab-verified purity</p>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col items-center text-center p-3 rounded-2xl bg-white/85 backdrop-blur-sm border border-[#e8dbc4]/70 shadow-sm hover:shadow-md transition-shadow">
-                    <div className="w-11 h-11 rounded-full bg-[#eef5f0] border border-[#d2e5d7] flex items-center justify-center text-[#18422d] mb-2 shadow-inner">
-                      <Heart className="w-5 h-5 text-[#18422d]" />
+                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <GlassJarIcon className="w-5 h-5 text-[#0b3b24]" />
                     </div>
-                    <span className="text-xs font-semibold text-[#292017] leading-tight">Rich In Nutrition</span>
-                    <span className="text-[11px] text-[#786b5c]">&amp; Immunity Booster</span>
+                    <div>
+                      <p className="text-xs font-bold text-[#0c2f1e]">Premium Glass Jar</p>
+                      <p className="text-[11px] text-[#71614f]">Zero plastic contact</p>
+                    </div>
                   </div>
                 </div>
 
-                {/* Ecommerce Navigation CTA Buttons */}
-                <div className="pt-2 flex flex-wrap items-center gap-4">
-                  <button
-                    onClick={scrollToShop}
-                    id="hero-shop-now"
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase btn-amazon-primary group"
-                  >
-                    <ShoppingBag className="w-5 h-5 text-[#e3a938]" />
-                    <span>Shop Pure A2 Ghee</span>
-                  </button>
+                {/* Pricing & CTA Buttons */}
+                <div className="pt-3 space-y-4">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-3xl sm:text-4xl font-black text-[#0b3b24]">
+                      {formatINR(PRODUCT.variants[0].price)}
+                    </span>
+                    <span className="text-lg text-[#998771] line-through">
+                      {formatINR(PRODUCT.variants[0].mrp)}
+                    </span>
+                    <span className="text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-3 py-1 rounded-full border border-[#bfe2cb]">
+                      Save {getDiscountPercent(PRODUCT.variants[0].mrp, PRODUCT.variants[0].price)}% OFF
+                    </span>
+                  </div>
 
-                  <button
-                    onClick={() => setProcessModalOpen(true)}
-                    className="inline-flex items-center gap-2 px-6 py-4 rounded-full text-xs font-semibold tracking-wider uppercase text-[#1b432e] hover:text-[#b87b14] bg-white/85 hover:bg-white border border-[#e0cfb4] transition-all shadow-sm"
-                  >
-                    <Sparkles className="w-4 h-4 text-[#e3a938]" />
-                    <span>Explore Bilona Heritage</span>
-                  </button>
+                  <p className="text-xs text-[#6e5e4d]">
+                    500 ml Glass Jar · Net Wt: 452 g · Free express delivery across India
+                  </p>
+
+                  <div className="flex items-center gap-3.5 flex-wrap">
+                    <button
+                      onClick={scrollToOrder}
+                      className="btn-anveshan-primary px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 active:scale-95"
+                    >
+                      <ShoppingBag className="w-4 h-4 text-[#ffd978]" />
+                      <span>Order Pure Ghee</span>
+                    </button>
+
+                    <button
+                      onClick={() => setBilonaModalOpen(true)}
+                      className="px-6 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-[#0b3b24] text-[#0b3b24] hover:bg-[#0b3b24] hover:text-white transition-all flex items-center gap-2"
+                    >
+                      <Info className="w-4 h-4" />
+                      <span>How It's Made</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Right Hero Product Card Showcase */}
-              <div className="lg:col-span-5 relative mt-6 lg:mt-0 flex justify-center">
-                <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-none">
-                  {/* Glow */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 sm:w-96 sm:h-96 bg-[#f7d995]/50 rounded-full blur-3xl -z-10 pointer-events-none" />
+              {/* Right Column – Authentic Product Jar Display (NO CROPPING) */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-[460px]">
+                  
+                  {/* Subtle warm glow behind container */}
+                  <div className="absolute inset-0 bg-[#e8a723]/15 rounded-3xl blur-2xl transform scale-95 -z-10" />
 
-                  <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/90 bg-white/50 group transform transition-transform duration-500 hover:scale-[1.01]">
-                    <Image
-                      src="/images/ghritkalash-jar.jpg"
-                      alt="Ghritkalash Pure A2 Cow Ghee Jar on rustic wood with golden bowl"
-                      width={600}
-                      height={800}
-                      priority
-                      className="w-full h-auto object-cover rounded-2xl"
-                    />
-
-                    {/* Floating Quality Pill */}
-                    <div className="absolute top-4 right-4 bg-[#113123]/95 backdrop-blur-md text-[#f8e7b9] px-3.5 py-2 rounded-2xl border border-[#e4a938]/40 shadow-xl flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#48c774] animate-ping" />
-                      <span className="text-[11px] font-bold tracking-wider uppercase">
-                        100% Vedic Bilona
+                  {/* Pristine Product Showcase Card */}
+                  <div className="bg-[#fcfaf4] rounded-3xl border border-[#ebdcc4] shadow-[0_12px_40px_rgba(20,40,25,0.08)] p-6 sm:p-8 flex flex-col items-center">
+                    
+                    {/* Top Badges */}
+                    <div className="w-full flex items-center justify-between mb-4">
+                      <span className="bg-[#0b3b24] text-[#f7e2a9] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-[#d4af37]/40 shadow-xs flex items-center gap-1.5">
+                        <Sparkles className="w-3 h-3 text-[#ffd978]" />
+                        <span>A2 Desi Cow Ghee</span>
+                      </span>
+                      <span className="bg-[#f6efe1] text-[#7d5e18] border border-[#e4d4b7] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                        Glass Jar
                       </span>
                     </div>
 
-                    {/* Floating Bottom Card */}
-                    <div className="absolute bottom-4 inset-x-4 bg-[#113123]/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl border border-white/20 flex items-center justify-between">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-bold text-[#f7cb68]">Starting at ₹944</span>
-                          <span className="text-xs text-[#b8cdbf] line-through">₹1,800</span>
-                        </div>
-                        <p className="text-[11px] text-[#d1dfd6]">500 ml Glass Jar &bull; 48% OFF</p>
+                    {/* Image Container with strict aspect-square and object-contain so NO CROPPING occurs */}
+                    <div className="relative w-full aspect-square max-h-[360px] bg-white rounded-2xl border border-[#f0e4d2] p-4 flex items-center justify-center overflow-hidden">
+                      <Image
+                        src={PRODUCT.image}
+                        alt="GHRITKALASH Pure A2 Desi Cow Ghee – Glass Jar Front"
+                        fill
+                        priority
+                        className="object-contain p-3"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 420px"
+                      />
+                    </div>
+
+                    {/* Jar Sub-Caption */}
+                    <div className="w-full mt-4 text-center">
+                      <p className="font-serif text-lg font-bold text-[#0c2f1e]">GHRITKALASH A2 Cow Ghee</p>
+                      <p className="text-xs text-[#80641b] font-semibold mt-0.5">
+                        Bilona | Handcrafted | Danedar | 100% Desi Cow Fat
+                      </p>
+                      <div className="mt-3 pt-3 border-t border-[#f0e4d2] flex items-center justify-between text-xs text-[#6e5e4d]">
+                        <span>Sizes: 500 ml &bull; 1 Litre</span>
+                        <button
+                          onClick={scrollToOrder}
+                          className="text-[#0b3b24] font-bold hover:underline flex items-center gap-1"
+                        >
+                          <span>Select Size</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
                       </div>
-                      <button
-                        onClick={scrollToShop}
-                        className="px-4 py-2 rounded-xl bg-[#e4a938] text-[#122b1c] text-xs font-bold uppercase tracking-wider hover:bg-[#ffd67a] transition-colors flex items-center gap-1 shadow-md"
-                      >
-                        <span>Select Size</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -259,443 +403,670 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── SECTION 2: WHY CHOOSE GHRITKALASH? ───────────────────────────────── */}
-        <section id="why-a2" className="py-16 sm:py-20 bg-[#f7f4ec] border-y border-[#ece3d2]/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <span className="w-12 h-px bg-[#cbb898]" />
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#c78d24]">
-                <polygon points="12 2 15 8 22 9 17 14 18.5 21 12 17.5 5.5 21 7 14 2 9 9 8" />
-              </svg>
-              <span className="w-12 h-px bg-[#cbb898]" />
-            </div>
-
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#23180d] font-semibold tracking-tight">
-              Why Choose GHRITKALASH?
-            </h2>
-            <p className="text-[#695c4d] text-sm sm:text-base max-w-xl mx-auto mt-2">
-              Honoring thousands of years of Vedic traditions to deliver pure unadulterated goodness.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 text-center">
-              <div className="bg-white/80 p-6 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all group">
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#e8f1eb] border border-[#cbdcd0] flex items-center justify-center text-[#17422c] mb-4 group-hover:scale-110 transition-transform shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
-                    <path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7c5 0 7 7 7 7s-2 7-7 7Z" />
-                    <path d="M11 20V6" />
-                  </svg>
+        {/* ── 2. CLEAN STATIONARY TRUST BAR (NO RUNNING TICKER IN MIDDLE) ─── */}
+        <section className="bg-white border-b border-[#e8d8be] py-7">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {BRAND_PILLARS.map((p, i) => (
+                <div key={i} className="flex items-start gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-[#edf5f0] border border-[#c4dece] flex items-center justify-center shrink-0">
+                    {p.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-sm font-bold text-[#0c2f1e] leading-snug">{p.title}</h3>
+                    <p className="text-[11.5px] text-[#695a4a] leading-relaxed mt-1">{p.desc}</p>
+                  </div>
                 </div>
-                <h3 className="font-serif text-lg font-bold text-[#23180d] mb-1">Pure A2 Cow Milk</h3>
-                <p className="text-xs sm:text-sm text-[#665a4c] leading-relaxed">
-                  Sourced from healthy, indigenous Indian cows freely grazing on open pastures.
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-6 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all group">
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#e8f1eb] border border-[#cbdcd0] flex items-center justify-center text-[#17422c] mb-4 group-hover:scale-110 transition-transform shadow-inner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-7 h-7">
-                    <line x1="12" y1="2" x2="12" y2="22" />
-                    <ellipse cx="12" cy="16" rx="6" ry="3" />
-                    <path d="M6 16c0 3 2.7 5 6 5s6-2 6-5" />
-                    <path d="M8 8h8" />
-                  </svg>
-                </div>
-                <h3 className="font-serif text-lg font-bold text-[#23180d] mb-1">Traditional Bilona Method</h3>
-                <p className="text-xs sm:text-sm text-[#665a4c] leading-relaxed">
-                  Prepared using age-old Vedic hand-churning techniques from naturally cultured curd.
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-6 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all group">
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#e8f1eb] border border-[#cbdcd0] flex items-center justify-center text-[#17422c] mb-4 group-hover:scale-110 transition-transform shadow-inner">
-                  <FlaskConical className="w-7 h-7 text-[#17422c]" />
-                </div>
-                <h3 className="font-serif text-lg font-bold text-[#23180d] mb-1">Lab-Tested &amp; Certified</h3>
-                <p className="text-xs sm:text-sm text-[#665a4c] leading-relaxed">
-                  Strict laboratory verification ensures 100% purity, zero preservatives, and superior nutrition.
-                </p>
-              </div>
-
-              <div className="bg-white/80 p-6 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all group">
-                <div className="w-16 h-16 mx-auto rounded-full bg-[#e8f1eb] border border-[#cbdcd0] flex items-center justify-center text-[#17422c] mb-4 group-hover:scale-110 transition-transform shadow-inner">
-                  <Heart className="w-7 h-7 text-[#17422c]" />
-                </div>
-                <h3 className="font-serif text-lg font-bold text-[#23180d] mb-1">Rich In Nutrition</h3>
-                <p className="text-xs sm:text-sm text-[#665a4c] leading-relaxed">
-                  Packed with natural butyric acid, fat-soluble vitamins, and holistic wellness benefits.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── SECTION 3: THE BILONA DIFFERENCE ─────────────────────────────────── */}
-        <section id="bilona-process" className="py-16 sm:py-24 bg-[#fcfaf5]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#0f2c1f] rounded-3xl overflow-hidden shadow-2xl border border-[#1d4c36] text-white">
-              <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-                <div className="lg:col-span-5 relative min-h-[340px] lg:min-h-full">
+        {/* ── 3. PRODUCT ORDER & INTERACTIVE IMAGE GALLERY SECTION ─────────── */}
+        <section id="order" className="py-16 sm:py-24 bg-[#faf7f0] scroll-mt-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center mb-10">
+              <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
+                Authentic Artisanal Ghee
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-[#0c2f1e] font-bold mt-1">
+                Order GHRITKALASH Pure Ghee
+              </h2>
+              <p className="text-xs sm:text-sm text-[#665747] mt-2 max-w-xl mx-auto">
+                Select your preferred size. Dispatched directly in shatter-safe glass jar packaging.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start bg-white rounded-3xl p-6 sm:p-10 border border-[#ebdcc4] shadow-sm">
+
+              {/* Left Column – Interactive Image Gallery (Thumbnails work instantly!) */}
+              <div className="lg:col-span-6 space-y-4">
+                
+                {/* Main Large Display with Previous / Next Arrows */}
+                <div className="relative aspect-square rounded-2xl bg-[#faf7ef] border border-[#ebdcc4] overflow-hidden group shadow-inner">
+                  
                   <Image
-                    src="/images/bilona-churning.jpg"
-                    alt="Authentic traditional Bilona churning in clay pot with makhan froth"
+                    src={GALLERY_ITEMS[activeImageIdx].src}
+                    alt={GALLERY_ITEMS[activeImageIdx].caption}
                     fill
-                    sizes="(max-width: 1024px) 100vw, 42vw"
-                    className="object-cover object-center"
+                    className="object-contain p-6 sm:p-8 transition-opacity duration-300"
+                    sizes="(max-width: 1024px) 100vw, 550px"
+                    priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f2c1f] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#0f2c1f]" />
-                  <div className="absolute bottom-5 left-5 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20 text-xs">
-                    <span className="text-[#f6c867] font-semibold">Vedic Churning:</span> Hand-churned Curd
+
+                  {/* Active view tag badge */}
+                  <div className="absolute top-3 left-3 bg-[#0b3b24]/90 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-xs shadow-xs">
+                    {GALLERY_ITEMS[activeImageIdx].tag}
+                  </div>
+
+                  {/* Counter badge */}
+                  <div className="absolute top-3 right-3 bg-white/90 text-[#3a3024] text-[10.5px] font-bold px-2.5 py-0.5 rounded-full border border-[#e5d5be] shadow-xs">
+                    {activeImageIdx + 1} / {GALLERY_ITEMS.length}
+                  </div>
+
+                  {/* Previous / Next Arrow Controls */}
+                  <button
+                    onClick={prevImage}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+
+                  <button
+                    onClick={nextImage}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+
+                  {/* Image caption strip */}
+                  <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-xs py-2 px-4 border-t border-[#ebdcc4] text-center">
+                    <p className="text-[11px] font-semibold text-[#44382c] line-clamp-1">
+                      {GALLERY_ITEMS[activeImageIdx].caption}
+                    </p>
                   </div>
                 </div>
 
-                <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-center">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[11px] font-bold tracking-[0.25em] text-[#e3a938] uppercase">
-                      THE BILONA DIFFERENCE
-                    </span>
-                    <div className="w-8 h-px bg-[#e3a938]/60" />
+                {/* 5 Thumbnails Row – Clicking switches main image! */}
+                <div className="grid grid-cols-5 gap-2.5">
+                  {GALLERY_ITEMS.map((item, idx) => {
+                    const isSelected = activeImageIdx === idx;
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveImageIdx(idx)}
+                        className={`aspect-square rounded-xl overflow-hidden relative transition-all duration-200 border-2 ${
+                          isSelected
+                            ? "border-[#0b3b24] ring-2 ring-[#0b3b24]/20 shadow-md bg-white scale-[1.03]"
+                            : "border-[#e5d5be] bg-[#faf7ef] opacity-75 hover:opacity-100 hover:border-[#b58718]"
+                        }`}
+                        aria-label={`View ${item.label}`}
+                      >
+                        <Image
+                          src={item.src}
+                          alt={item.label}
+                          fill
+                          className="object-contain p-1"
+                          sizes="15vw"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <p className="text-[11px] text-center text-[#7a6b5a] pt-1">
+                  Click any thumbnail to inspect jar front, nutrition label, heritage details &amp; texture.
+                </p>
+              </div>
+
+              {/* Right Column – Product Configuration & Order Action */}
+              <div className="lg:col-span-6 space-y-6">
+
+                {/* Star Rating & Verified Reviews */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 bg-[#fff8e8] px-2.5 py-1 rounded-md border border-[#f5dc9e]">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
+                      ))}
+                    </div>
+                    <span className="text-xs font-bold text-[#2a2016] ml-1">4.8</span>
                   </div>
+                  <span className="text-xs text-[#71614f]">({PRODUCT.reviewsCount} verified customer reviews)</span>
+                </div>
 
-                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-semibold text-[#fcf9f2] mb-4">
-                    A Time-Tested Process For Pure Ghee
-                  </h2>
-
-                  <p className="text-sm sm:text-base text-[#d1dfd6] leading-relaxed mb-8 max-w-xl">
-                    Our ghee is made using the traditional Bilona method, where whole cultured curd is hand-churned
-                    with a wooden churner to obtain pure makhan (butter), which is then slowly simmered over low flame
-                    to produce golden, aromatic ghee with maximum nutritional value.
+                {/* Name & Subtitle */}
+                <div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0c2f1e] leading-snug">
+                    {PRODUCT.name}
+                  </h3>
+                  <p className="text-xs font-bold text-[#b58718] uppercase tracking-wider mt-1">
+                    {PRODUCT.subtitle} &bull; Danedar Granular Texture
                   </p>
+                </div>
 
-                  <div className="mb-8">
-                    <button
-                      onClick={() => setProcessModalOpen(true)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase text-[#f6d483] border border-[#e3a938]/60 hover:bg-[#e3a938]/10 transition-all"
-                    >
-                      <span>Know The 5-Step Process</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[#e3a938]" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-4 relative">
-                    <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-[#25523a]" />
-
+                {/* Tabs: Description / Highlights / Nutrition / Storage */}
+                <div className="border-b border-[#e8d8be]">
+                  <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-px">
                     {[
-                      { step: "1. Fresh A2 Milk", desc: "From healthy, grass-fed indigenous cows", img: "/images/cow-and-calf.jpg" },
-                      { step: "2. Curd Preparation", desc: "Naturally fermented overnight in earthen pots", img: "/images/bilona-churning.jpg" },
-                      { step: "3. Hand Churning (Bilona)", desc: "Bi-directional churning to extract pure butter (makhan)", img: "/images/danedar-texture.jpg" },
-                      { step: "4. Slow Simmering", desc: "Simmered over low flame into golden, aromatic ghee", img: "/images/golden-colour.jpg" },
-                    ].map((s) => (
-                      <div key={s.step} className="flex items-center gap-4 relative z-10 group">
-                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#e3a938] shrink-0 shadow-md">
-                          <Image src={s.img} alt={s.step} width={48} height={48} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-[#fcf9f2]">{s.step}</h4>
-                          <p className="text-xs text-[#b8cdbf]">{s.desc}</p>
-                        </div>
-                      </div>
+                      { id: "description", label: "Description" },
+                      { id: "highlights", label: "Highlights" },
+                      { id: "nutrition", label: "Nutritional Facts" },
+                      { id: "storage", label: "Storage & Usage" },
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`pb-2.5 text-xs sm:text-sm font-bold capitalize transition-colors whitespace-nowrap border-b-2 ${
+                          activeTab === tab.id
+                            ? "border-[#0b3b24] text-[#0b3b24]"
+                            : "border-transparent text-[#71614f] hover:text-[#0b3b24]"
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
                     ))}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* ── SECTION 4: ECOMMERCE PRODUCTS CATALOG ───────────────────────────── */}
-        <section id="shop" className="py-16 sm:py-24 bg-[#f9f6ef] border-y border-[#ece3d2]/80 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header */}
-            <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-              <div className="inline-flex items-center gap-2 mb-2">
-                <span className="w-8 h-px bg-[#a86e1a]" />
-                <span className="text-[11px] font-bold tracking-[0.25em] text-[#a86e1a] uppercase">
-                  OUR OFFERINGS
-                </span>
-                <span className="w-8 h-px bg-[#a86e1a]" />
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#23180d] font-bold tracking-tight">
-                Pure A2 Bilona Cow Ghee
-              </h2>
-              <p className="text-sm sm:text-base text-[#6b5c4d] mt-2">
-                Handcrafted in small batches with uncompromising Vedic purity. Choose your jar size below.
-              </p>
-            </div>
+                {/* Tab Contents */}
+                <div className="min-h-[110px] text-xs sm:text-sm text-[#554737] leading-relaxed">
+                  {activeTab === "description" && (
+                    <p>
+                      {PRODUCT.description} Cultured naturally from pure A2 desi cow milk,
+                      separated into makkhan via bidirectional bilona churning, and simmered slowly
+                      to produce aromatic granular (Danedar) ghee with zero synthetic additives.
+                    </p>
+                  )}
 
-            {/* Product Cards Grid — Scalable for multiple products */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-start justify-center max-w-5xl mx-auto">
-              {PRODUCTS.map((product) => (
-                <div key={product.id} className="w-full">
-                  <ProductCard product={product} />
-                </div>
-              ))}
+                  {activeTab === "highlights" && (
+                    <ul className="space-y-2">
+                      {PRODUCT.keyHighlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#2d251d]">
+                          <Check className="w-4 h-4 text-[#0b3b24] shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-              {/* Product Feature Highlights card alongside the product */}
-              <div className="md:col-span-1 lg:col-span-2 grid grid-cols-2 gap-4">
-                <div className="bg-white p-4 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="aspect-square rounded-xl overflow-hidden mb-3 relative">
-                    <Image
-                      src="/images/golden-colour.jpg"
-                      alt="Rich Golden Colour of Pure Ghee"
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <h4 className="font-serif text-sm font-bold text-[#23180d]">Rich Golden Colour</h4>
-                  <p className="text-[11px] text-[#736657]">Naturally golden, free from dyes</p>
-                </div>
-
-                <div className="bg-white p-4 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="aspect-square rounded-xl overflow-hidden mb-3 relative">
-                    <Image
-                      src="/images/danedar-texture.jpg"
-                      alt="Danedar Granular Texture of Vedic Ghee"
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <h4 className="font-serif text-sm font-bold text-[#23180d]">Danedar Texture</h4>
-                  <p className="text-[11px] text-[#736657]">A hallmark of authentic Bilona ghee</p>
-                </div>
-
-                <div className="bg-white p-4 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="aspect-square rounded-xl overflow-hidden mb-3 relative">
-                    <Image
-                      src="/images/enhances-taste.jpg"
-                      alt="Enhances Taste on hot food"
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <h4 className="font-serif text-sm font-bold text-[#23180d]">Enhances Taste</h4>
-                  <p className="text-[11px] text-[#736657]">Adds divine aroma to daily dishes</p>
-                </div>
-
-                <div className="bg-white p-4 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="aspect-square rounded-xl overflow-hidden mb-3 relative">
-                    <Image
-                      src="/images/multipurpose-use.jpg"
-                      alt="Multipurpose Use in cooking and ayurveda"
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <h4 className="font-serif text-sm font-bold text-[#23180d]">Multipurpose Use</h4>
-                  <p className="text-[11px] text-[#736657]">Cooking, baking &amp; Ayurvedic remedies</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Anchor alias for #product */}
-        <div id="product" className="sr-only" aria-hidden="true" />
-
-        {/* ── SECTION 5: AYURVEDIC BENEFITS ───────────────────────────────────── */}
-        <section id="benefits" className="py-16 sm:py-24 bg-[#fcfaf5]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#23180d] font-semibold tracking-tight">
-                Goodness For A Healthier You
-              </h2>
-              <p className="text-[#695c4d] text-sm sm:text-base max-w-xl mx-auto mt-2">
-                Packed with natural vitamins A, D, E, K, Omega-3 fatty acids, and butyric acid.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                {[
-                  { icon: <Shield className="w-6 h-6 text-[#18422d]" />, label: "Boosts Immunity" },
-                  { icon: <Activity className="w-6 h-6 text-[#18422d]" />, label: "Improves Digestion" },
-                  { icon: <Brain className="w-6 h-6 text-[#18422d]" />, label: "Supports Brain Health" },
-                  { icon: <Droplet className="w-6 h-6 text-[#18422d]" />, label: "Rich In Healthy Fats" },
-                  { icon: <Bone className="w-6 h-6 text-[#18422d]" />, label: "Good For Bone Health" },
-                ].map((b) => (
-                  <div
-                    key={b.label}
-                    className="flex flex-col items-center text-center p-4 rounded-2xl bg-white border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all"
-                  >
-                    <div className="w-14 h-14 rounded-full bg-[#eef5f0] border border-[#d2e5d7] flex items-center justify-center text-[#18422d] mb-3 shadow-inner">
-                      {b.icon}
-                    </div>
-                    <h4 className="text-xs sm:text-sm font-bold text-[#23180d] leading-snug">
-                      {b.label}
-                    </h4>
-                  </div>
-                ))}
-              </div>
-
-              <div className="lg:col-span-4 relative rounded-3xl overflow-hidden shadow-xl border-4 border-white/90 bg-white">
-                <div className="aspect-[4/3] relative">
-                  <Image
-                    src="/images/cow-and-calf.jpg"
-                    alt="Mother Indian Gir cow and calf grazing peacefully in nature"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4 text-center bg-gradient-to-r from-[#f7f2e4] to-[#fbf9f4] border-t border-[#ebdcc4]">
-                  <p className="font-heading italic text-lg sm:text-xl text-[#23180d] font-semibold">
-                    &ldquo;Nature&apos;s Goodness In Every Drop&rdquo;
-                  </p>
-                  <p className="text-[11px] text-[#736657] uppercase tracking-wider mt-0.5">
-                    Revered Indigenous Indian Gir Breed
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 6: CUSTOMER REVIEWS ─────────────────────────────────────── */}
-        <section id="reviews" className="py-16 sm:py-24 bg-[#f8f5ed] border-y border-[#ece3d2]/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-3xl sm:text-4xl text-[#23180d] font-semibold tracking-tight">
-                What Our Customers Say
-              </h2>
-              <p className="text-[#695c4d] text-sm sm:text-base max-w-xl mx-auto mt-2">
-                Loved by families and Ayurveda enthusiasts across India.
-              </p>
-            </div>
-
-            <div className="relative">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[0, 1, 2].map((offset) => {
-                  const item = REVIEWS[(activeReviewIndex + offset) % REVIEWS.length];
-                  return (
-                    <div
-                      key={offset}
-                      className="bg-white p-6 sm:p-7 rounded-2xl border border-[#ebdcc4] shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
-                    >
-                      <div>
-                        <div className="flex items-center gap-1 text-[#e4a938] mb-3">
-                          {[...Array(item.stars)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-current text-[#e4a938]" />
-                          ))}
-                        </div>
-                        <p className="text-sm text-[#483e33] italic leading-relaxed mb-4">
-                          &ldquo;{item.text}&rdquo;
-                        </p>
-                      </div>
-                      <div className="pt-3 border-t border-[#f2e7d5] flex items-center justify-between">
-                        <span className="font-semibold text-xs sm:text-sm text-[#23180d]">
-                          — {item.author}
-                        </span>
-                        <span className="text-[10px] text-[#1b432e] font-semibold bg-[#eef5f0] px-2 py-0.5 rounded-full">
-                          {item.location}
-                        </span>
+                  {activeTab === "nutrition" && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-[#71614f]">
+                        Approx. Nutritional Value per 100g &bull; Single Ingredient: {PRODUCT.ingredient}
+                      </p>
+                      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-xs">
+                        {PRODUCT.nutrition.slice(0, 8).map((n) => (
+                          <div key={n.label} className="flex justify-between border-b border-[#f0e4d2] pb-1">
+                            <span className="text-[#665747]">{n.label}</span>
+                            <span className="font-bold text-[#0c2f1e]">{n.value}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  )}
 
-              {/* Slider Controls */}
-              <div className="flex items-center justify-center gap-4 mt-8">
-                <button
-                  onClick={handlePrevReview}
-                  aria-label="Previous review"
-                  className="w-10 h-10 rounded-full bg-white border border-[#ebdcc4] flex items-center justify-center text-[#23180d] hover:bg-[#113123] hover:text-white transition-colors shadow-sm"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <div className="flex items-center gap-1.5">
-                  {REVIEWS.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveReviewIndex(i)}
-                      aria-label={`Go to slide ${i + 1}`}
-                      className={`h-2 rounded-full transition-all ${
-                        i === activeReviewIndex ? "w-6 bg-[#113123]" : "w-2 bg-[#d7cbb6] hover:bg-[#a86e1a]"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <button
-                  onClick={handleNextReview}
-                  aria-label="Next review"
-                  className="w-10 h-10 rounded-full bg-white border border-[#ebdcc4] flex items-center justify-center text-[#23180d] hover:bg-[#113123] hover:text-white transition-colors shadow-sm"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 7: SUNSET CTA BANNER ───────────────────────────────────── */}
-        <section className="relative overflow-hidden py-16 sm:py-24 text-white">
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/images/footer-sunset.jpg"
-              alt="Golden sunset over cows grazing in lush green pastures"
-              fill
-              sizes="100vw"
-              className="object-cover object-center filter brightness-75 contrast-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/80" />
-          </div>
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-4">
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#fbf8f2]">
-                  Bring Home The Purity Of Tradition
-                </h2>
-                <p className="text-base sm:text-lg text-[#ded3c3] max-w-2xl font-light leading-relaxed">
-                  GHRITKALASH Pure A2 Cow Ghee — a gift of health, exquisite taste,
-                  and sacred Vedic tradition for you and your family.
-                </p>
-
-                <div className="pt-3 flex flex-wrap gap-4">
-                  <button
-                    onClick={scrollToShop}
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider btn-amazon-primary group"
-                  >
-                    <ShoppingBag className="w-5 h-5 text-[#e3a938]" />
-                    <span>Shop Pure Ghee</span>
-                  </button>
-
-                  <button
-                    onClick={() => setCartOpen(true)}
-                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-bold uppercase tracking-wider bg-white/20 hover:bg-white/30 text-white border border-white/30 transition-all backdrop-blur-sm"
-                  >
-                    <span>View Cart</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="lg:col-span-4 flex items-center justify-center lg:justify-end gap-3 sm:gap-4">
-                {[
-                  {
-                    icon: (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                        <path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7c5 0 7 7 7 7s-2 7-7 7Z" />
-                        <path d="M11 20V6" />
-                      </svg>
-                    ),
-                    label: "Pure",
-                  },
-                  { icon: <Heart className="w-5 h-5 text-[#f8e7b9]" />, label: "Nutritious" },
-                  { icon: <Shield className="w-5 h-5 text-[#f8e7b9]" />, label: "Trusted" },
-                  { icon: <Sparkles className="w-5 h-5 text-[#f8e7b9]" />, label: "Traditional" },
-                ].map((b) => (
-                  <div key={b.label} className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-full border border-white/40 bg-white/10 backdrop-blur-md flex items-center justify-center text-[#f8e7b9] mb-1.5 shadow-md">
-                      {b.icon}
+                  {activeTab === "storage" && (
+                    <div className="space-y-1.5 text-xs sm:text-sm">
+                      <p><strong>Storage:</strong> {PRODUCT.storage}</p>
+                      <p><strong>Culinary Uses:</strong> Ideal for tadka, drizzling over dal, khichdi, roti, and Ayurvedic consumption.</p>
+                      <p><strong>Allergen Information:</strong> Contains Milk.</p>
                     </div>
-                    <span className="text-[11px] font-semibold text-[#f8e7b9] uppercase tracking-wider">
-                      {b.label}
+                  )}
+                </div>
+
+                {/* Size Selector */}
+                <div>
+                  <p className="text-xs font-bold text-[#44382c] uppercase tracking-wider mb-2.5">
+                    Select Glass Jar Size:
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {PRODUCT.variants.map((v) => {
+                      const isSelected = selectedVariant.id === v.id;
+                      const vDiscount = getDiscountPercent(v.mrp, v.price);
+                      return (
+                        <button
+                          key={v.id}
+                          type="button"
+                          onClick={() => setSelectedVariant(v)}
+                          className={`p-4 rounded-2xl text-left border-2 transition-all ${
+                            isSelected
+                              ? "border-[#0b3b24] bg-[#0b3b24] text-white shadow-md"
+                              : "border-[#e5d5be] bg-[#faf7ef] text-[#2d251d] hover:border-[#0b3b24]/40"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs sm:text-sm font-bold">{v.label}</span>
+                            <span
+                              className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
+                                isSelected ? "bg-[#ffd978]/20 text-[#ffd978]" : "bg-[#e6f4ea] text-[#09733c]"
+                              }`}
+                            >
+                              {vDiscount}% off
+                            </span>
+                          </div>
+
+                          <div className="flex items-baseline gap-2">
+                            <span className={`text-lg font-black ${isSelected ? "text-[#ffd978]" : "text-[#0b3b24]"}`}>
+                              {formatINR(v.price)}
+                            </span>
+                            <span className={`text-xs line-through ${isSelected ? "text-[#a3cbb5]" : "text-[#998771]"}`}>
+                              {formatINR(v.mrp)}
+                            </span>
+                          </div>
+
+                          <div className={`text-[11px] mt-1 ${isSelected ? "text-[#c2dfce]" : "text-[#7a6b5a]"}`}>
+                            Net Wt: {v.netWeight} &bull; {v.unitPrice}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Price Summary Row */}
+                <div className="flex items-center justify-between py-3 border-t border-[#ebdcc4]">
+                  <div>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-black text-[#0b3b24]">
+                        {formatINR(selectedVariant.price)}
+                      </span>
+                      <span className="text-base text-[#998771] line-through">
+                        {formatINR(selectedVariant.mrp)}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#71614f]">Inclusive of all taxes &bull; Free express shipping</p>
+                  </div>
+
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-2.5 py-1 rounded-md border border-[#c0e3cb]">
+                      You Save {formatINR(selectedVariant.mrp - selectedVariant.price)}
                     </span>
                   </div>
-                ))}
+                </div>
+
+                {/* Add to Cart CTA */}
+                <button
+                  onClick={handleAddToCart}
+                  className={`w-full py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-[0.98] ${
+                    addedToCart ? "bg-[#09733c] text-white" : "btn-anveshan-primary"
+                  }`}
+                >
+                  {addedToCart ? (
+                    <>
+                      <Check className="w-4 h-4 text-white" />
+                      <span>Added to Shopping Bag!</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-4 h-4 text-[#ffd978]" />
+                      <span>Add to Bag · {formatINR(selectedVariant.price)}</span>
+                    </>
+                  )}
+                </button>
+
+                {/* Shipping & Packaging Trust info */}
+                <div className="pt-2 flex items-center justify-center gap-4 text-xs text-[#71614f] text-center flex-wrap">
+                  <span>🚚 Free Express Shipping</span>
+                  <span>📦 Shatter-Safe Glass Packaging</span>
+                  <span>🛡️ 100% Satisfaction Guarantee</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. THE 5-STEP BILONA PROCESS SECTION ──────────────────────────── */}
+        <section id="process" className="py-20 bg-white border-t border-[#e8d8be] scroll-mt-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
+                Time-Honoured Vedic Science
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-[#0c2f1e] font-bold mt-1">
+                The Authentic Bilona Method
+              </h2>
+              <p className="text-xs sm:text-sm text-[#665747] mt-2 max-w-xl mx-auto leading-relaxed">
+                Why Bilona Ghee is cultured from curd, not cream. Five steps that transform
+                pure Desi Cow milk into golden Danedar Ghee.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {BILONA_STEPS.map((s, i) => (
+                <div key={i} className="text-center p-5 rounded-2xl bg-[#fcfaf5] border border-[#ebdcc4] hover:border-[#0b3b24] transition-all group">
+                  <div className="w-14 h-14 rounded-2xl bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center mx-auto mb-4 group-hover:bg-[#0b3b24] group-hover:text-white transition-colors">
+                    {s.icon}
+                  </div>
+                  <span className="text-[10px] font-black text-[#b58718] uppercase tracking-widest">
+                    Step {s.step}
+                  </span>
+                  <h3 className="font-serif text-sm font-bold text-[#0c2f1e] mt-1 mb-2">
+                    {s.title}
+                  </h3>
+                  <p className="text-[11.5px] text-[#695a4a] leading-relaxed">
+                    {s.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 text-center">
+              <button
+                onClick={() => setBilonaModalOpen(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border-2 border-[#0b3b24] text-[#0b3b24] hover:bg-[#0b3b24] hover:text-white transition-all"
+              >
+                <span>Read Complete Bilona Protocol</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. BRAND HERITAGE & ORIGIN STORY ─────────────────────────────── */}
+        <section id="heritage" className="py-20 bg-[#082819] text-[#d4eadc] scroll-mt-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Left Column: Authentic Brand Heritage Image (NO CROPPING) */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-[420px] aspect-square rounded-3xl overflow-hidden border-2 border-[#1e5839] bg-[#0c3622] shadow-2xl">
+                  <Image
+                    src={PRODUCT.heritageImage}
+                    alt="GHRITKALASH Our Heritage – Ancient Indian Traditions"
+                    fill
+                    className="object-contain p-4"
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                  />
+                </div>
+              </div>
+
+              {/* Right Column: Narrative */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <span className="text-[11px] font-bold text-[#ffd978] uppercase tracking-[0.25em]">
+                    Our Heritage &amp; Roots
+                  </span>
+                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#faf5e8] leading-tight mt-1">
+                    Rooted in Ancient<br />Indian Traditions
+                  </h2>
+                </div>
+
+                <p className="text-sm sm:text-base text-[#b8d9c6] leading-relaxed">
+                  GHRITKALASH is born out of a commitment to restore authentic Vedic food traditions
+                  to modern homes. Real ghee was never an industrial factory byproduct made by skimming
+                  cream. It is a slow, sacred craft where curd is hand-churned into makkhan and gently clarified.
+                </p>
+
+                {/* 4 Authentic Highlights from the jar */}
+                <div className="grid grid-cols-2 gap-3.5 pt-2">
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                    <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Manufacturer</p>
+                    <p className="text-xs font-bold text-[#faf5e8] mt-0.5">{PRODUCT.manufacturer}</p>
+                  </div>
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                    <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Origin Location</p>
+                    <p className="text-xs font-bold text-[#faf5e8] mt-0.5">Sinhagad Road, Pune</p>
+                  </div>
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                    <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Ingredient</p>
+                    <p className="text-xs font-bold text-[#faf5e8] mt-0.5">Pure Desi Cow Milk Fat</p>
+                  </div>
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                    <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Purity Check</p>
+                    <p className="text-xs font-bold text-[#faf5e8] mt-0.5">60+ Safety Parameters</p>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    onClick={scrollToOrder}
+                    className="btn-anveshan-gold px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#082417] shadow-lg flex items-center gap-2"
+                  >
+                    <span>Order Authentic Ghee</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. DANEDAR TEXTURE & SIMPLICITY SPOTLIGHT ──────────────────────── */}
+        <section className="py-20 bg-[#faf7f0]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-3xl overflow-hidden relative aspect-[16/8] sm:aspect-[16/7] border border-[#ebdcc4] shadow-md">
+              <Image
+                src={PRODUCT.lifestyleImage}
+                alt="GHRITKALASH – A Golden Standard of Simplicity"
+                fill
+                className="object-cover object-center"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#072416]/85 via-[#072416]/50 to-transparent" />
+              <div className="absolute inset-0 flex items-center px-8 sm:px-16">
+                <div className="max-w-md space-y-4 text-white">
+                  <span className="text-xs font-bold text-[#ffd978] uppercase tracking-[0.2em]">
+                    Authentic Granular Goodness
+                  </span>
+                  <h2 className="font-serif text-3xl sm:text-4xl font-bold leading-tight">
+                    A Golden Standard<br />of Simplicity
+                  </h2>
+                  <p className="text-xs sm:text-sm text-[#d4eadc] leading-relaxed">
+                    One single ingredient: pure desi cow milk fat. Nothing added, nothing taken away.
+                    Enjoy natural crystalline Danedar texture that melts effortlessly on warm rotis.
+                  </p>
+                  <button
+                    onClick={scrollToOrder}
+                    className="btn-anveshan-gold px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-[#072417] inline-flex items-center gap-2"
+                  >
+                    <span>Order Now</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. NUTRITIONAL INFORMATION (From Jar Back Label) ──────────────── */}
+        <section id="nutrition" className="py-20 bg-white border-y border-[#e8d8be] scroll-mt-20">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
+                Authentic Label Data
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-[#0c2f1e] font-bold mt-1">
+                Nutritional Information
+              </h2>
+              <p className="text-xs sm:text-sm text-[#665747] mt-2">
+                Approximate values per 100g as verified on the product package.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              
+              {/* Nutritional Table */}
+              <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-[#ebdcc4] shadow-xs">
+                <div className="bg-[#0b3b24] text-white px-5 py-3.5 flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider">Parameter</span>
+                  <span className="text-xs font-bold uppercase tracking-wider">Per 100g</span>
+                </div>
+                <div className="divide-y divide-[#f2e7d7]">
+                  {PRODUCT.nutrition.map((n, i) => (
+                    <div
+                      key={n.label}
+                      className={`flex items-center justify-between px-5 py-2.5 text-xs sm:text-sm ${
+                        i % 2 === 0 ? "bg-white" : "bg-[#faf7ef]"
+                      }`}
+                    >
+                      <span className="text-[#554737] font-medium">{n.label}</span>
+                      <span className="font-bold text-[#0c2f1e]">{n.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-[#fcfaf5] px-5 py-3 border-t border-[#ebdcc4] text-[11px] text-[#71614f]">
+                  <strong>Ingredient:</strong> {PRODUCT.ingredient} &bull; <strong>Allergen:</strong> Contains Milk
+                </div>
+              </div>
+
+              {/* Jar Nutrition Label Image (NO CROPPING) */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-[360px] aspect-square rounded-2xl overflow-hidden border border-[#ebdcc4] bg-[#faf7ef] p-4 flex items-center justify-center">
+                  <Image
+                    src={PRODUCT.nutritionImage}
+                    alt="GHRITKALASH Nutritional Information Label"
+                    fill
+                    className="object-contain p-3"
+                    sizes="(max-width: 1024px) 100vw, 360px"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 8. CUSTOMER REVIEWS ───────────────────────────────────────────── */}
+        <section id="reviews" className="py-20 bg-[#faf7f0] scroll-mt-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
+              <div>
+                <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
+                  Verified Customer Feedback
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
+                  Loved for Danedar Purity
+                </h2>
+              </div>
+
+              <div className="flex items-center gap-3.5 bg-white border border-[#ebdcc4] rounded-2xl px-5 py-3 shadow-xs">
+                <div>
+                  <p className="text-3xl font-black text-[#0b3b24]">4.8</p>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
+                    ))}
+                  </div>
+                </div>
+                <div className="pl-3.5 border-l border-[#ebdcc4]">
+                  <p className="text-xs font-bold text-[#221c16]">{PRODUCT.reviewsCount} Reviews</p>
+                  <p className="text-[11px] text-[#71614f]">100% Verified Buyers</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {CUSTOMER_REVIEWS.map((rev, i) => (
+                <div key={i} className="bg-white rounded-2xl border border-[#ebdcc4] p-6 shadow-xs hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-1 mb-2.5">
+                    {[...Array(rev.stars)].map((_, j) => (
+                      <Star key={j} className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
+                    ))}
+                  </div>
+                  <h4 className="font-serif text-base font-bold text-[#0c2f1e] mb-2">
+                    "{rev.title}"
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[#554737] leading-relaxed">
+                    {rev.text}
+                  </p>
+                  <div className="flex items-center gap-3 mt-4 pt-4 border-t border-[#f0e4d2]">
+                    <div className="w-8 h-8 rounded-full bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center text-xs font-bold text-[#0b3b24]">
+                      {rev.initials}
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#221c16]">{rev.author}</p>
+                      <p className="text-[11px] text-[#71614f]">{rev.location}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 9. FREQUENTLY ASKED QUESTIONS ─────────────────────────────────── */}
+        <section id="faq" className="py-20 bg-white border-t border-[#e8d8be] scroll-mt-20">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
+                Got Questions?
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
+                Frequently Asked
+              </h2>
+            </div>
+
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => {
+                const isOpen = expandedFaq === idx;
+                return (
+                  <div key={idx} className="bg-[#faf7ef] rounded-2xl border border-[#ebdcc4] overflow-hidden">
+                    <button
+                      onClick={() => setExpandedFaq(isOpen ? null : idx)}
+                      className="w-full py-4 px-6 text-left flex items-center justify-between gap-4 text-xs sm:text-sm font-bold text-[#221c16] hover:text-[#0b3b24] transition-colors"
+                    >
+                      <span>{faq.q}</span>
+                      {isOpen ? (
+                        <ChevronUp className="w-4 h-4 text-[#0b3b24] shrink-0" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-[#8a7967] shrink-0" />
+                      )}
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-5 text-xs sm:text-sm text-[#554737] leading-relaxed border-t border-[#f0e4d2] pt-3">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 10. DIRECT SUPPORT STRIP ──────────────────────────────────────── */}
+        <section className="py-14 bg-[#fdf7e8] border-t border-[#ebdcc4]">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="font-serif text-2xl font-bold text-[#0c2f1e] mb-1">
+              Have Questions Before Ordering?
+            </h2>
+            <p className="text-xs sm:text-sm text-[#665747] mb-8">
+              Speak directly with our team in Pune, Maharashtra.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+              <a
+                href={`tel:${PRODUCT.phone}`}
+                className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
+              >
+                <Phone className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform" />
+                <div className="text-left">
+                  <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Phone Support</p>
+                  <p className="text-xs font-bold text-[#0c2f1e]">{PRODUCT.phone}</p>
+                </div>
+              </a>
+
+              <a
+                href={`mailto:${PRODUCT.email}`}
+                className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
+              >
+                <Mail className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform" />
+                <div className="text-left">
+                  <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Email Us</p>
+                  <p className="text-xs font-bold text-[#0c2f1e]">{PRODUCT.email}</p>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 shadow-xs">
+                <MapPin className="w-4 h-4 text-[#0b3b24]" />
+                <div className="text-left">
+                  <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Facility Address</p>
+                  <p className="text-xs font-bold text-[#0c2f1e]">Sinhagad Road, Pune</p>
+                </div>
               </div>
             </div>
           </div>
@@ -703,7 +1074,48 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <Footer onHelpClick={handleHelpClick} />
+      <Footer />
+
+      {/* ── 11. DYNAMIC STICKY PURCHASE BAR ─────────────────────────────────── */}
+      <div className="fixed bottom-0 left-0 right-0 z-30">
+        <div className="bg-[#072417] border-t border-[#1b5b3a] py-2.5 px-4 sm:px-8 shadow-[0_-4px_24px_rgba(0,0,0,0.35)] flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl overflow-hidden relative border border-[#ffd978]/40 shrink-0 bg-white">
+              <Image
+                src={PRODUCT.image}
+                alt="GHRITKALASH A2 Cow Ghee"
+                fill
+                className="object-contain p-0.5"
+              />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white leading-tight">GHRITKALASH A2 Cow Ghee</p>
+              <p className="text-[10.5px] text-[#ffd978]">
+                {selectedVariant.label} &bull; Danedar Bilona
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="text-right">
+              <span className="text-sm sm:text-base font-black text-[#ffd978]">
+                {formatINR(selectedVariant.price)}
+              </span>
+              <span className="text-[10px] sm:text-xs text-[#7bb894] line-through ml-1.5">
+                {formatINR(selectedVariant.mrp)}
+              </span>
+            </div>
+
+            <button
+              onClick={handleAddToCart}
+              className="btn-anveshan-gold px-5 sm:px-7 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-md flex items-center gap-2 active:scale-95"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-[#072417]" />
+              <span>{addedToCart ? "Added!" : "Order Now"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
