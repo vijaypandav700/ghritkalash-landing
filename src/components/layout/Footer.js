@@ -23,8 +23,8 @@ export default function Footer() {
 
       {/* Trust strip */}
       <div className="border-b border-[#1a4a2e]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8">
             {[
               {
                 icon: <DesiCowIcon className="w-7 h-7 text-[#ffd978]" />,
@@ -47,7 +47,7 @@ export default function Footer() {
                 desc: "Zero plastic contact for authentic Danedar goodness",
               },
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-3.5">
+              <div key={i} className="flex items-start gap-3.5 p-3 sm:p-0 rounded-xl bg-[#0f3c27]/40 sm:bg-transparent border border-[#1d5e3d]/60 sm:border-0">
                 <div className="p-2 rounded-xl bg-[#0f3c27] border border-[#1d5e3d] shrink-0">
                   {item.icon}
                 </div>
@@ -62,8 +62,8 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
 
           {/* Brand */}
           <div className="md:col-span-5 space-y-4">
@@ -135,7 +135,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-[#1a4a2e]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-24 sm:pb-20 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6a9a80]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-32 sm:pb-24 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6a9a80] text-center sm:text-left">
           <p>© 2026 GHRITKALASH ENTERPRISES. All Rights Reserved. Made in India 🇮🇳</p>
           <p className="text-[11px]">Pure · Traditional · Trusted</p>
         </div>

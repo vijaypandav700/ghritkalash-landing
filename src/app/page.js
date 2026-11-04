@@ -237,20 +237,20 @@ export default function Home() {
         {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
         <section className="relative bg-gradient-to-b from-[#fdf7e9] via-[#fbf8f0] to-[#f7f2e4] border-b border-[#e8d8be] overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
 
               {/* Left Column – Brand Story & Value Proposition */}
-              <div className="lg:col-span-7 space-y-6">
+              <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                 
                 {/* Eyebrow Badge */}
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#eef7f1] border border-[#cbe4d4] text-[#0b3b24] text-xs font-bold uppercase tracking-widest">
-                  <span className="w-2 h-2 rounded-full bg-[#0b3b24]" />
+                <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#eef7f1] border border-[#cbe4d4] text-[#0b3b24] text-[11px] sm:text-xs font-bold uppercase tracking-widest">
+                  <span className="w-2 h-2 rounded-full bg-[#0b3b24] shrink-0" />
                   <span>Traditional Bilona · Pure A2 Cow Ghee</span>
                 </div>
 
                 {/* Main Heading */}
                 <div>
-                  <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0c2f1e] leading-[1.1] tracking-tight">
+                  <h1 className="font-serif text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0c2f1e] leading-[1.15] sm:leading-[1.1] tracking-tight break-words">
                     Bring Home
                     <br />
                     The Richness{" "}
@@ -259,65 +259,65 @@ export default function Home() {
                 </div>
 
                 {/* Subtitle / Description */}
-                <p className="text-base sm:text-lg text-[#554737] leading-relaxed max-w-xl">
+                <p className="text-sm sm:text-lg text-[#554737] leading-relaxed max-w-xl">
                   Crafted using the revered Vedic Bilona method — cultured from pure desi cow milk curd,
                   hand-churned with a wooden bilona to extract fresh makkhan, and gently slow-simmered
                   into golden, aromatic Danedar Ghee.
                 </p>
 
                 {/* 4 Bespoke Trust Icons (No random emojis, authentic SVGs) */}
-                <div className="grid grid-cols-2 gap-3.5 pt-2 max-w-lg">
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
-                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
-                      <DesiCowIcon className="w-5 h-5 text-[#0b3b24]" />
+                <div className="grid grid-cols-2 gap-2 sm:gap-3.5 pt-1 max-w-lg">
+                  <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-1.5 sm:p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <DesiCowIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#0b3b24]" />
                     </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#0c2f1e]">100% Pure A2 Milk</p>
-                      <p className="text-[11px] text-[#71614f]">Indigenous Desi Cows</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
-                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
-                      <BilonaChurnIcon className="w-5 h-5 text-[#0b3b24]" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#0c2f1e]">Traditional Bilona</p>
-                      <p className="text-[11px] text-[#71614f]">Hand-churned from curd</p>
+                    <div className="min-w-0">
+                      <p className="text-[11px] sm:text-xs font-bold text-[#0c2f1e] truncate">100% Pure A2 Milk</p>
+                      <p className="text-[10px] sm:text-[11px] text-[#71614f] truncate">Indigenous Desi Cows</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
-                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
-                      <PuritySealIcon className="w-5 h-5 text-[#0b3b24]" />
+                  <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-1.5 sm:p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <BilonaChurnIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#0b3b24]" />
                     </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#0c2f1e]">60+ Tested</p>
-                      <p className="text-[11px] text-[#71614f]">Lab-verified purity</p>
+                    <div className="min-w-0">
+                      <p className="text-[11px] sm:text-xs font-bold text-[#0c2f1e] truncate">Traditional Bilona</p>
+                      <p className="text-[10px] sm:text-[11px] text-[#71614f] truncate">Hand-churned from curd</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
-                    <div className="p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
-                      <GlassJarIcon className="w-5 h-5 text-[#0b3b24]" />
+                  <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-1.5 sm:p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <PuritySealIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#0b3b24]" />
                     </div>
-                    <div>
-                      <p className="text-xs font-bold text-[#0c2f1e]">Premium Glass Jar</p>
-                      <p className="text-[11px] text-[#71614f]">Zero plastic contact</p>
+                    <div className="min-w-0">
+                      <p className="text-[11px] sm:text-xs font-bold text-[#0c2f1e] truncate">60+ Tested</p>
+                      <p className="text-[10px] sm:text-[11px] text-[#71614f] truncate">Lab-verified purity</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl bg-white/70 border border-[#eddcc4] shadow-xs">
+                    <div className="p-1.5 sm:p-2 rounded-lg bg-[#eef7f1] text-[#0b3b24] shrink-0">
+                      <GlassJarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-[#0b3b24]" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[11px] sm:text-xs font-bold text-[#0c2f1e] truncate">Premium Glass Jar</p>
+                      <p className="text-[10px] sm:text-[11px] text-[#71614f] truncate">Zero plastic contact</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Pricing & CTA Buttons */}
-                <div className="pt-3 space-y-4">
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-3xl sm:text-4xl font-black text-[#0b3b24]">
+                <div className="pt-2 sm:pt-3 space-y-3.5 sm:space-y-4">
+                  <div className="flex items-baseline gap-2.5 sm:gap-3 flex-wrap">
+                    <span className="text-2xl sm:text-4xl font-black text-[#0b3b24]">
                       {formatINR(PRODUCT.variants[0].price)}
                     </span>
-                    <span className="text-lg text-[#998771] line-through">
+                    <span className="text-base sm:text-lg text-[#998771] line-through">
                       {formatINR(PRODUCT.variants[0].mrp)}
                     </span>
-                    <span className="text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-3 py-1 rounded-full border border-[#bfe2cb]">
+                    <span className="text-[11px] sm:text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-[#bfe2cb]">
                       Save {getDiscountPercent(PRODUCT.variants[0].mrp, PRODUCT.variants[0].price)}% OFF
                     </span>
                   </div>
@@ -326,10 +326,10 @@ export default function Home() {
                     500 ml Glass Jar · Net Wt: 452 g · Free express delivery across India
                   </p>
 
-                  <div className="flex items-center gap-3.5 flex-wrap">
+                  <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3">
                     <button
                       onClick={scrollToOrder}
-                      className="btn-anveshan-primary px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 active:scale-95"
+                      className="btn-anveshan-primary px-7 sm:px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 active:scale-95"
                     >
                       <ShoppingBag className="w-4 h-4 text-[#ffd978]" />
                       <span>Order Pure Ghee</span>
@@ -337,7 +337,7 @@ export default function Home() {
 
                     <button
                       onClick={() => setBilonaModalOpen(true)}
-                      className="px-6 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-[#0b3b24] text-[#0b3b24] hover:bg-[#0b3b24] hover:text-white transition-all flex items-center gap-2"
+                      className="px-5 sm:px-6 py-3.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-[#0b3b24] text-[#0b3b24] hover:bg-[#0b3b24] hover:text-white transition-all flex items-center justify-center gap-2"
                     >
                       <Info className="w-4 h-4" />
                       <span>How It's Made</span>
@@ -354,35 +354,35 @@ export default function Home() {
                   <div className="absolute inset-0 bg-[#e8a723]/15 rounded-3xl blur-2xl transform scale-95 -z-10" />
 
                   {/* Pristine Product Showcase Card */}
-                  <div className="bg-[#fcfaf4] rounded-3xl border border-[#ebdcc4] shadow-[0_12px_40px_rgba(20,40,25,0.08)] p-6 sm:p-8 flex flex-col items-center">
+                  <div className="bg-[#fcfaf4] rounded-2xl sm:rounded-3xl border border-[#ebdcc4] shadow-[0_12px_40px_rgba(20,40,25,0.08)] p-4 sm:p-8 flex flex-col items-center">
                     
                     {/* Top Badges */}
-                    <div className="w-full flex items-center justify-between mb-4">
-                      <span className="bg-[#0b3b24] text-[#f7e2a9] text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-[#d4af37]/40 shadow-xs flex items-center gap-1.5">
+                    <div className="w-full flex items-center justify-between mb-3 sm:mb-4">
+                      <span className="bg-[#0b3b24] text-[#f7e2a9] text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 sm:px-3 py-1 rounded-full border border-[#d4af37]/40 shadow-xs flex items-center gap-1.5">
                         <Sparkles className="w-3 h-3 text-[#ffd978]" />
                         <span>A2 Desi Cow Ghee</span>
                       </span>
-                      <span className="bg-[#f6efe1] text-[#7d5e18] border border-[#e4d4b7] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                      <span className="bg-[#f6efe1] text-[#7d5e18] border border-[#e4d4b7] text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-1 rounded-full">
                         Glass Jar
                       </span>
                     </div>
 
                     {/* Image Container with strict aspect-square and object-contain so NO CROPPING occurs */}
-                    <div className="relative w-full aspect-square max-h-[360px] bg-white rounded-2xl border border-[#f0e4d2] p-4 flex items-center justify-center overflow-hidden">
+                    <div className="relative w-full aspect-square max-h-[360px] bg-white rounded-xl sm:rounded-2xl border border-[#f0e4d2] p-3 sm:p-4 flex items-center justify-center overflow-hidden">
                       <Image
                         src={PRODUCT.image}
                         alt="GHRITKALASH Pure A2 Desi Cow Ghee – Glass Jar Front"
                         fill
                         priority
-                        className="object-contain p-3"
+                        className="object-contain p-2 sm:p-3"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 420px"
                       />
                     </div>
 
                     {/* Jar Sub-Caption */}
-                    <div className="w-full mt-4 text-center">
-                      <p className="font-serif text-lg font-bold text-[#0c2f1e]">GHRITKALASH A2 Cow Ghee</p>
-                      <p className="text-xs text-[#80641b] font-semibold mt-0.5">
+                    <div className="w-full mt-3 sm:mt-4 text-center">
+                      <p className="font-serif text-base sm:text-lg font-bold text-[#0c2f1e]">GHRITKALASH A2 Cow Ghee</p>
+                      <p className="text-[11px] sm:text-xs text-[#80641b] font-semibold mt-0.5">
                         Bilona | Handcrafted | Danedar | 100% Desi Cow Fat
                       </p>
                       <div className="mt-3 pt-3 border-t border-[#f0e4d2] flex items-center justify-between text-xs text-[#6e5e4d]">
@@ -404,12 +404,12 @@ export default function Home() {
         </section>
 
         {/* ── 2. CLEAN STATIONARY TRUST BAR (NO RUNNING TICKER IN MIDDLE) ─── */}
-        <section className="bg-white border-b border-[#e8d8be] py-7">
+        <section className="bg-white border-b border-[#e8d8be] py-6 sm:py-7">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {BRAND_PILLARS.map((p, i) => (
-                <div key={i} className="flex items-start gap-3.5">
-                  <div className="w-11 h-11 rounded-2xl bg-[#edf5f0] border border-[#c4dece] flex items-center justify-center shrink-0">
+                <div key={i} className="flex items-start gap-3 p-3 sm:p-0 rounded-xl bg-[#faf7ef] sm:bg-transparent border border-[#ebdcc4]/60 sm:border-0">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-[#edf5f0] border border-[#c4dece] flex items-center justify-center shrink-0">
                     {p.icon}
                   </div>
                   <div>
@@ -438,30 +438,30 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start bg-white rounded-3xl p-6 sm:p-10 border border-[#ebdcc4] shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 border border-[#ebdcc4] shadow-sm">
 
               {/* Left Column – Interactive Image Gallery (Thumbnails work instantly!) */}
-              <div className="lg:col-span-6 space-y-4">
+              <div className="lg:col-span-6 space-y-3.5 sm:space-y-4">
                 
                 {/* Main Large Display with Previous / Next Arrows */}
-                <div className="relative aspect-square rounded-2xl bg-[#faf7ef] border border-[#ebdcc4] overflow-hidden group shadow-inner">
+                <div className="relative aspect-square rounded-xl sm:rounded-2xl bg-[#faf7ef] border border-[#ebdcc4] overflow-hidden group shadow-inner">
                   
                   <Image
                     src={GALLERY_ITEMS[activeImageIdx].src}
                     alt={GALLERY_ITEMS[activeImageIdx].caption}
                     fill
-                    className="object-contain p-6 sm:p-8 transition-opacity duration-300"
+                    className="object-contain p-3 sm:p-8 transition-opacity duration-300"
                     sizes="(max-width: 1024px) 100vw, 550px"
                     priority
                   />
 
                   {/* Active view tag badge */}
-                  <div className="absolute top-3 left-3 bg-[#0b3b24]/90 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-xs shadow-xs">
+                  <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-[#0b3b24]/90 text-white text-[9.5px] sm:text-[10px] font-bold px-2.5 sm:px-3 py-1 rounded-full backdrop-blur-xs shadow-xs">
                     {GALLERY_ITEMS[activeImageIdx].tag}
                   </div>
 
                   {/* Counter badge */}
-                  <div className="absolute top-3 right-3 bg-white/90 text-[#3a3024] text-[10.5px] font-bold px-2.5 py-0.5 rounded-full border border-[#e5d5be] shadow-xs">
+                  <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-white/90 text-[#3a3024] text-[10px] sm:text-[10.5px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full border border-[#e5d5be] shadow-xs">
                     {activeImageIdx + 1} / {GALLERY_ITEMS.length}
                   </div>
 
@@ -469,29 +469,29 @@ export default function Home() {
                   <button
                     onClick={prevImage}
                     aria-label="Previous image"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
+                    className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
 
                   <button
                     onClick={nextImage}
                     aria-label="Next image"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
+                    className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-[#0b3b24] flex items-center justify-center border border-[#ebdcc4] shadow-md transition-transform active:scale-90"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
 
                   {/* Image caption strip */}
-                  <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-xs py-2 px-4 border-t border-[#ebdcc4] text-center">
-                    <p className="text-[11px] font-semibold text-[#44382c] line-clamp-1">
+                  <div className="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur-xs py-1.5 sm:py-2 px-3 sm:px-4 border-t border-[#ebdcc4] text-center">
+                    <p className="text-[10.5px] sm:text-[11px] font-semibold text-[#44382c] truncate">
                       {GALLERY_ITEMS[activeImageIdx].caption}
                     </p>
                   </div>
                 </div>
 
                 {/* 5 Thumbnails Row – Clicking switches main image! */}
-                <div className="grid grid-cols-5 gap-2.5">
+                <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5">
                   {GALLERY_ITEMS.map((item, idx) => {
                     const isSelected = activeImageIdx === idx;
                     return (
@@ -499,7 +499,7 @@ export default function Home() {
                         key={idx}
                         type="button"
                         onClick={() => setActiveImageIdx(idx)}
-                        className={`aspect-square rounded-xl overflow-hidden relative transition-all duration-200 border-2 ${
+                        className={`aspect-square rounded-lg sm:rounded-xl overflow-hidden relative transition-all duration-200 border-2 ${
                           isSelected
                             ? "border-[#0b3b24] ring-2 ring-[#0b3b24]/20 shadow-md bg-white scale-[1.03]"
                             : "border-[#e5d5be] bg-[#faf7ef] opacity-75 hover:opacity-100 hover:border-[#b58718]"
@@ -510,7 +510,7 @@ export default function Home() {
                           src={item.src}
                           alt={item.label}
                           fill
-                          className="object-contain p-1"
+                          className="object-contain p-0.5 sm:p-1"
                           sizes="15vw"
                         />
                       </button>
@@ -518,16 +518,16 @@ export default function Home() {
                   })}
                 </div>
 
-                <p className="text-[11px] text-center text-[#7a6b5a] pt-1">
+                <p className="text-[10.5px] sm:text-[11px] text-center text-[#7a6b5a] pt-0.5 sm:pt-1">
                   Click any thumbnail to inspect jar front, nutrition label, heritage details &amp; texture.
                 </p>
               </div>
 
               {/* Right Column – Product Configuration & Order Action */}
-              <div className="lg:col-span-6 space-y-6">
+              <div className="lg:col-span-6 space-y-5 sm:space-y-6">
 
                 {/* Star Rating & Verified Reviews */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
                   <div className="flex items-center gap-1 bg-[#fff8e8] px-2.5 py-1 rounded-md border border-[#f5dc9e]">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
@@ -541,7 +541,7 @@ export default function Home() {
 
                 {/* Name & Subtitle */}
                 <div>
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#0c2f1e] leading-snug">
+                  <h3 className="font-serif text-xl sm:text-3xl font-bold text-[#0c2f1e] leading-snug">
                     {PRODUCT.name}
                   </h3>
                   <p className="text-xs font-bold text-[#b58718] uppercase tracking-wider mt-1">
@@ -551,7 +551,7 @@ export default function Home() {
 
                 {/* Tabs: Description / Highlights / Nutrition / Storage */}
                 <div className="border-b border-[#e8d8be]">
-                  <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-px">
+                  <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 scrollbar-none">
                     {[
                       { id: "description", label: "Description" },
                       { id: "highlights", label: "Highlights" },
@@ -561,7 +561,7 @@ export default function Home() {
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`pb-2.5 text-xs sm:text-sm font-bold capitalize transition-colors whitespace-nowrap border-b-2 ${
+                        className={`pb-2 text-xs sm:text-sm font-bold capitalize transition-colors whitespace-nowrap border-b-2 ${
                           activeTab === tab.id
                             ? "border-[#0b3b24] text-[#0b3b24]"
                             : "border-transparent text-[#71614f] hover:text-[#0b3b24]"
@@ -574,7 +574,7 @@ export default function Home() {
                 </div>
 
                 {/* Tab Contents */}
-                <div className="min-h-[110px] text-xs sm:text-sm text-[#554737] leading-relaxed">
+                <div className="min-h-[100px] text-xs sm:text-sm text-[#554737] leading-relaxed">
                   {activeTab === "description" && (
                     <p>
                       {PRODUCT.description} Cultured naturally from pure A2 desi cow milk,
@@ -599,7 +599,7 @@ export default function Home() {
                       <p className="text-xs text-[#71614f]">
                         Approx. Nutritional Value per 100g &bull; Single Ingredient: {PRODUCT.ingredient}
                       </p>
-                      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-xs">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-xs">
                         {PRODUCT.nutrition.slice(0, 8).map((n) => (
                           <div key={n.label} className="flex justify-between border-b border-[#f0e4d2] pb-1">
                             <span className="text-[#665747]">{n.label}</span>
@@ -625,7 +625,7 @@ export default function Home() {
                     Select Glass Jar Size:
                   </p>
 
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-2.5 sm:gap-3">
                     {PRODUCT.variants.map((v) => {
                       const isSelected = selectedVariant.id === v.id;
                       const vDiscount = getDiscountPercent(v.mrp, v.price);
@@ -634,7 +634,7 @@ export default function Home() {
                           key={v.id}
                           type="button"
                           onClick={() => setSelectedVariant(v)}
-                          className={`p-4 rounded-2xl text-left border-2 transition-all ${
+                          className={`p-3.5 sm:p-4 rounded-xl sm:rounded-2xl text-left border-2 transition-all ${
                             isSelected
                               ? "border-[#0b3b24] bg-[#0b3b24] text-white shadow-md"
                               : "border-[#e5d5be] bg-[#faf7ef] text-[#2d251d] hover:border-[#0b3b24]/40"
@@ -643,7 +643,7 @@ export default function Home() {
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-xs sm:text-sm font-bold">{v.label}</span>
                             <span
-                              className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
+                              className={`text-[9.5px] sm:text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
                                 isSelected ? "bg-[#ffd978]/20 text-[#ffd978]" : "bg-[#e6f4ea] text-[#09733c]"
                               }`}
                             >
@@ -652,7 +652,7 @@ export default function Home() {
                           </div>
 
                           <div className="flex items-baseline gap-2">
-                            <span className={`text-lg font-black ${isSelected ? "text-[#ffd978]" : "text-[#0b3b24]"}`}>
+                            <span className={`text-base sm:text-lg font-black ${isSelected ? "text-[#ffd978]" : "text-[#0b3b24]"}`}>
                               {formatINR(v.price)}
                             </span>
                             <span className={`text-xs line-through ${isSelected ? "text-[#a3cbb5]" : "text-[#998771]"}`}>
@@ -660,7 +660,7 @@ export default function Home() {
                             </span>
                           </div>
 
-                          <div className={`text-[11px] mt-1 ${isSelected ? "text-[#c2dfce]" : "text-[#7a6b5a]"}`}>
+                          <div className={`text-[10.5px] sm:text-[11px] mt-1 ${isSelected ? "text-[#c2dfce]" : "text-[#7a6b5a]"}`}>
                             Net Wt: {v.netWeight} &bull; {v.unitPrice}
                           </div>
                         </button>
@@ -670,21 +670,21 @@ export default function Home() {
                 </div>
 
                 {/* Price Summary Row */}
-                <div className="flex items-center justify-between py-3 border-t border-[#ebdcc4]">
+                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 py-3 border-t border-[#ebdcc4]">
                   <div>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-3xl font-black text-[#0b3b24]">
+                      <span className="text-2xl sm:text-3xl font-black text-[#0b3b24]">
                         {formatINR(selectedVariant.price)}
                       </span>
-                      <span className="text-base text-[#998771] line-through">
+                      <span className="text-sm sm:text-base text-[#998771] line-through">
                         {formatINR(selectedVariant.mrp)}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#71614f]">Inclusive of all taxes &bull; Free express shipping</p>
+                    <p className="text-[10.5px] sm:text-[11px] text-[#71614f]">Inclusive of all taxes &bull; Free express shipping</p>
                   </div>
 
-                  <div className="text-right">
-                    <span className="text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-2.5 py-1 rounded-md border border-[#c0e3cb]">
+                  <div>
+                    <span className="inline-block text-[11px] sm:text-xs font-bold text-[#09733c] bg-[#e6f4ea] px-2.5 py-1 rounded-md border border-[#c0e3cb]">
                       You Save {formatINR(selectedVariant.mrp - selectedVariant.price)}
                     </span>
                   </div>
@@ -693,7 +693,7 @@ export default function Home() {
                 {/* Add to Cart CTA */}
                 <button
                   onClick={handleAddToCart}
-                  className={`w-full py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-[0.98] ${
+                  className={`w-full py-3.5 sm:py-4 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all shadow-md active:scale-[0.98] ${
                     addedToCart ? "bg-[#09733c] text-white" : "btn-anveshan-primary"
                   }`}
                 >
@@ -711,7 +711,7 @@ export default function Home() {
                 </button>
 
                 {/* Shipping & Packaging Trust info */}
-                <div className="pt-2 flex items-center justify-center gap-4 text-xs text-[#71614f] text-center flex-wrap">
+                <div className="pt-2 flex items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-[#71614f] text-center flex-wrap">
                   <span>🚚 Free Express Shipping</span>
                   <span>📦 Shatter-Safe Glass Packaging</span>
                   <span>🛡️ 100% Satisfaction Guarantee</span>
@@ -737,16 +737,16 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-6">
               {BILONA_STEPS.map((s, i) => (
-                <div key={i} className="text-center p-5 rounded-2xl bg-[#fcfaf5] border border-[#ebdcc4] hover:border-[#0b3b24] transition-all group">
-                  <div className="w-14 h-14 rounded-2xl bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center mx-auto mb-4 group-hover:bg-[#0b3b24] group-hover:text-white transition-colors">
+                <div key={i} className="text-center p-4 sm:p-5 rounded-2xl bg-[#fcfaf5] border border-[#ebdcc4] hover:border-[#0b3b24] transition-all group">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:bg-[#0b3b24] group-hover:text-white transition-colors">
                     {s.icon}
                   </div>
                   <span className="text-[10px] font-black text-[#b58718] uppercase tracking-widest">
                     Step {s.step}
                   </span>
-                  <h3 className="font-serif text-sm font-bold text-[#0c2f1e] mt-1 mb-2">
+                  <h3 className="font-serif text-sm font-bold text-[#0c2f1e] mt-1 mb-1.5 sm:mb-2">
                     {s.title}
                   </h3>
                   <p className="text-[11.5px] text-[#695a4a] leading-relaxed">
@@ -756,7 +756,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mt-10 text-center">
+            <div className="mt-8 sm:mt-10 text-center">
               <button
                 onClick={() => setBilonaModalOpen(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider border-2 border-[#0b3b24] text-[#0b3b24] hover:bg-[#0b3b24] hover:text-white transition-all"
@@ -769,30 +769,30 @@ export default function Home() {
         </section>
 
         {/* ── 5. BRAND HERITAGE & ORIGIN STORY ─────────────────────────────── */}
-        <section id="heritage" className="py-20 bg-[#082819] text-[#d4eadc] scroll-mt-20">
+        <section id="heritage" className="py-14 sm:py-20 bg-[#082819] text-[#d4eadc] scroll-mt-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
               {/* Left Column: Authentic Brand Heritage Image (NO CROPPING) */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative w-full max-w-[420px] aspect-square rounded-3xl overflow-hidden border-2 border-[#1e5839] bg-[#0c3622] shadow-2xl">
+                <div className="relative w-full max-w-[420px] aspect-square rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-[#1e5839] bg-[#0c3622] shadow-2xl">
                   <Image
                     src={PRODUCT.heritageImage}
                     alt="GHRITKALASH Our Heritage – Ancient Indian Traditions"
                     fill
-                    className="object-contain p-4"
+                    className="object-contain p-3 sm:p-4"
                     sizes="(max-width: 1024px) 100vw, 420px"
                   />
                 </div>
               </div>
 
               {/* Right Column: Narrative */}
-              <div className="lg:col-span-7 space-y-6">
+              <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                 <div>
-                  <span className="text-[11px] font-bold text-[#ffd978] uppercase tracking-[0.25em]">
+                  <span className="text-[10.5px] sm:text-[11px] font-bold text-[#ffd978] uppercase tracking-[0.25em]">
                     Our Heritage &amp; Roots
                   </span>
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#faf5e8] leading-tight mt-1">
+                  <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#faf5e8] leading-tight mt-1">
                     Rooted in Ancient<br />Indian Traditions
                   </h2>
                 </div>
@@ -804,20 +804,20 @@ export default function Home() {
                 </p>
 
                 {/* 4 Authentic Highlights from the jar */}
-                <div className="grid grid-cols-2 gap-3.5 pt-2">
-                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                <div className="grid grid-cols-1 xs:grid-cols-2 gap-2.5 sm:gap-3.5 pt-1 sm:pt-2">
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
                     <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Manufacturer</p>
                     <p className="text-xs font-bold text-[#faf5e8] mt-0.5">{PRODUCT.manufacturer}</p>
                   </div>
-                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
                     <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Origin Location</p>
                     <p className="text-xs font-bold text-[#faf5e8] mt-0.5">Sinhagad Road, Pune</p>
                   </div>
-                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
                     <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Ingredient</p>
                     <p className="text-xs font-bold text-[#faf5e8] mt-0.5">Pure Desi Cow Milk Fat</p>
                   </div>
-                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-2xl p-3.5">
+                  <div className="bg-[#0f3c27] border border-[#1d5e3d] rounded-xl sm:rounded-2xl p-3 sm:p-3.5">
                     <p className="text-[10px] font-bold text-[#ffd978] uppercase tracking-wider">Purity Check</p>
                     <p className="text-xs font-bold text-[#faf5e8] mt-0.5">60+ Safety Parameters</p>
                   </div>
@@ -826,7 +826,7 @@ export default function Home() {
                 <div className="pt-2">
                   <button
                     onClick={scrollToOrder}
-                    className="btn-anveshan-gold px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#082417] shadow-lg flex items-center gap-2"
+                    className="btn-anveshan-gold px-7 sm:px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#082417] shadow-lg flex items-center justify-center gap-2 w-full xs:w-auto"
                   >
                     <span>Order Authentic Ghee</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -838,9 +838,9 @@ export default function Home() {
         </section>
 
         {/* ── 6. DANEDAR TEXTURE & SIMPLICITY SPOTLIGHT ──────────────────────── */}
-        <section className="py-20 bg-[#faf7f0]">
+        <section className="py-14 sm:py-20 bg-[#faf7f0]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl overflow-hidden relative aspect-[16/8] sm:aspect-[16/7] border border-[#ebdcc4] shadow-md">
+            <div className="rounded-2xl sm:rounded-3xl overflow-hidden relative min-h-[380px] sm:min-h-[320px] sm:aspect-[16/7] border border-[#ebdcc4] shadow-md flex items-center">
               <Image
                 src={PRODUCT.lifestyleImage}
                 alt="GHRITKALASH – A Golden Standard of Simplicity"
@@ -848,22 +848,22 @@ export default function Home() {
                 className="object-cover object-center"
                 sizes="100vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#072416]/85 via-[#072416]/50 to-transparent" />
-              <div className="absolute inset-0 flex items-center px-8 sm:px-16">
-                <div className="max-w-md space-y-4 text-white">
-                  <span className="text-xs font-bold text-[#ffd978] uppercase tracking-[0.2em]">
-                    Authentic Granular Goodness
-                  </span>
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold leading-tight">
-                    A Golden Standard<br />of Simplicity
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#d4eadc] leading-relaxed">
-                    One single ingredient: pure desi cow milk fat. Nothing added, nothing taken away.
-                    Enjoy natural crystalline Danedar texture that melts effortlessly on warm rotis.
-                  </p>
+              <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-[#072416]/95 via-[#072416]/75 sm:via-[#072416]/50 to-transparent" />
+              <div className="relative z-10 max-w-md space-y-3 sm:space-y-4 text-white px-5 sm:px-12 lg:px-16 py-8 sm:py-12">
+                <span className="text-[11px] sm:text-xs font-bold text-[#ffd978] uppercase tracking-[0.2em]">
+                  Authentic Granular Goodness
+                </span>
+                <h2 className="font-serif text-2xl sm:text-4xl font-bold leading-tight">
+                  A Golden Standard<br />of Simplicity
+                </h2>
+                <p className="text-xs sm:text-sm text-[#d4eadc] leading-relaxed">
+                  One single ingredient: pure desi cow milk fat. Nothing added, nothing taken away.
+                  Enjoy natural crystalline Danedar texture that melts effortlessly on warm rotis.
+                </p>
+                <div>
                   <button
                     onClick={scrollToOrder}
-                    className="btn-anveshan-gold px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-[#072417] inline-flex items-center gap-2"
+                    className="btn-anveshan-gold px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-[#072417] inline-flex items-center justify-center gap-2 w-full xs:w-auto"
                   >
                     <span>Order Now</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -932,21 +932,21 @@ export default function Home() {
         </section>
 
         {/* ── 8. CUSTOMER REVIEWS ───────────────────────────────────────────── */}
-        <section id="reviews" className="py-20 bg-[#faf7f0] scroll-mt-20">
+        <section id="reviews" className="py-14 sm:py-20 bg-[#faf7f0] scroll-mt-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-12">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
               <div>
                 <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
                   Verified Customer Feedback
                 </span>
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
+                <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
                   Loved for Danedar Purity
                 </h2>
               </div>
 
-              <div className="flex items-center gap-3.5 bg-white border border-[#ebdcc4] rounded-2xl px-5 py-3 shadow-xs">
+              <div className="flex items-center gap-3.5 bg-white border border-[#ebdcc4] rounded-xl sm:rounded-2xl px-4 sm:px-5 py-3 shadow-xs">
                 <div>
-                  <p className="text-3xl font-black text-[#0b3b24]">4.8</p>
+                  <p className="text-2xl sm:text-3xl font-black text-[#0b3b24]">4.8</p>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
@@ -960,27 +960,27 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {CUSTOMER_REVIEWS.map((rev, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-[#ebdcc4] p-6 shadow-xs hover:shadow-md transition-shadow">
-                  <div className="flex items-center gap-1 mb-2.5">
+                <div key={i} className="bg-white rounded-xl sm:rounded-2xl border border-[#ebdcc4] p-4 sm:p-6 shadow-xs hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-1 mb-2 sm:mb-2.5">
                     {[...Array(rev.stars)].map((_, j) => (
                       <Star key={j} className="w-3.5 h-3.5 fill-[#e8a723] text-[#e8a723]" />
                     ))}
                   </div>
-                  <h4 className="font-serif text-base font-bold text-[#0c2f1e] mb-2">
+                  <h4 className="font-serif text-sm sm:text-base font-bold text-[#0c2f1e] mb-1.5 sm:mb-2">
                     "{rev.title}"
                   </h4>
                   <p className="text-xs sm:text-sm text-[#554737] leading-relaxed">
                     {rev.text}
                   </p>
-                  <div className="flex items-center gap-3 mt-4 pt-4 border-t border-[#f0e4d2]">
-                    <div className="w-8 h-8 rounded-full bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center text-xs font-bold text-[#0b3b24]">
+                  <div className="flex items-center gap-3 mt-3.5 sm:mt-4 pt-3.5 sm:pt-4 border-t border-[#f0e4d2]">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#eef7f1] border border-[#cbe4d4] flex items-center justify-center text-xs font-bold text-[#0b3b24]">
                       {rev.initials}
                     </div>
                     <div>
                       <p className="text-xs font-bold text-[#221c16]">{rev.author}</p>
-                      <p className="text-[11px] text-[#71614f]">{rev.location}</p>
+                      <p className="text-[10.5px] sm:text-[11px] text-[#71614f]">{rev.location}</p>
                     </div>
                   </div>
                 </div>
@@ -990,25 +990,25 @@ export default function Home() {
         </section>
 
         {/* ── 9. FREQUENTLY ASKED QUESTIONS ─────────────────────────────────── */}
-        <section id="faq" className="py-20 bg-white border-t border-[#e8d8be] scroll-mt-20">
+        <section id="faq" className="py-14 sm:py-20 bg-white border-t border-[#e8d8be] scroll-mt-20">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 sm:mb-12">
               <span className="text-[11px] font-bold text-[#b58718] uppercase tracking-[0.25em]">
                 Got Questions?
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#0c2f1e] mt-1">
                 Frequently Asked
               </h2>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5 sm:space-y-3">
               {FAQS.map((faq, idx) => {
                 const isOpen = expandedFaq === idx;
                 return (
-                  <div key={idx} className="bg-[#faf7ef] rounded-2xl border border-[#ebdcc4] overflow-hidden">
+                  <div key={idx} className="bg-[#faf7ef] rounded-xl sm:rounded-2xl border border-[#ebdcc4] overflow-hidden">
                     <button
                       onClick={() => setExpandedFaq(isOpen ? null : idx)}
-                      className="w-full py-4 px-6 text-left flex items-center justify-between gap-4 text-xs sm:text-sm font-bold text-[#221c16] hover:text-[#0b3b24] transition-colors"
+                      className="w-full py-3.5 sm:py-4 px-4 sm:px-6 text-left flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-[#221c16] hover:text-[#0b3b24] transition-colors"
                     >
                       <span>{faq.q}</span>
                       {isOpen ? (
@@ -1018,7 +1018,7 @@ export default function Home() {
                       )}
                     </button>
                     {isOpen && (
-                      <div className="px-6 pb-5 text-xs sm:text-sm text-[#554737] leading-relaxed border-t border-[#f0e4d2] pt-3">
+                      <div className="px-4 sm:px-6 pb-4 sm:pb-5 text-xs sm:text-sm text-[#554737] leading-relaxed border-t border-[#f0e4d2] pt-3">
                         {faq.a}
                       </div>
                     )}
@@ -1030,20 +1030,20 @@ export default function Home() {
         </section>
 
         {/* ── 10. DIRECT SUPPORT STRIP ──────────────────────────────────────── */}
-        <section className="py-14 bg-[#fdf7e8] border-t border-[#ebdcc4]">
+        <section className="py-12 sm:py-14 bg-[#fdf7e8] border-t border-[#ebdcc4]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="font-serif text-2xl font-bold text-[#0c2f1e] mb-1">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#0c2f1e] mb-1">
               Have Questions Before Ordering?
             </h2>
-            <p className="text-xs sm:text-sm text-[#665747] mb-8">
+            <p className="text-xs sm:text-sm text-[#665747] mb-6 sm:mb-8">
               Speak directly with our team in Pune, Maharashtra.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-5">
               <a
                 href={`tel:${PRODUCT.phone}`}
-                className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
+                className="flex items-center justify-center sm:justify-start gap-3 bg-white border border-[#ebdcc4] rounded-xl sm:rounded-2xl px-5 sm:px-6 py-3 sm:py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
               >
-                <Phone className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform" />
+                <Phone className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform shrink-0" />
                 <div className="text-left">
                   <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Phone Support</p>
                   <p className="text-xs font-bold text-[#0c2f1e]">{PRODUCT.phone}</p>
@@ -1052,17 +1052,17 @@ export default function Home() {
 
               <a
                 href={`mailto:${PRODUCT.email}`}
-                className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
+                className="flex items-center justify-center sm:justify-start gap-3 bg-white border border-[#ebdcc4] rounded-xl sm:rounded-2xl px-5 sm:px-6 py-3 sm:py-3.5 hover:border-[#0b3b24] transition-colors group shadow-xs"
               >
-                <Mail className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform" />
+                <Mail className="w-4 h-4 text-[#0b3b24] group-hover:scale-110 transition-transform shrink-0" />
                 <div className="text-left">
                   <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Email Us</p>
                   <p className="text-xs font-bold text-[#0c2f1e]">{PRODUCT.email}</p>
                 </div>
               </a>
 
-              <div className="flex items-center gap-3 bg-white border border-[#ebdcc4] rounded-2xl px-6 py-3.5 shadow-xs">
-                <MapPin className="w-4 h-4 text-[#0b3b24]" />
+              <div className="flex items-center justify-center sm:justify-start gap-3 bg-white border border-[#ebdcc4] rounded-xl sm:rounded-2xl px-5 sm:px-6 py-3 sm:py-3.5 shadow-xs">
+                <MapPin className="w-4 h-4 text-[#0b3b24] shrink-0" />
                 <div className="text-left">
                   <p className="text-[10px] font-bold text-[#71614f] uppercase tracking-wider">Facility Address</p>
                   <p className="text-xs font-bold text-[#0c2f1e]">Sinhagad Road, Pune</p>
@@ -1076,41 +1076,67 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* ── 11. DYNAMIC STICKY PURCHASE BAR ─────────────────────────────────── */}
-      <div className="fixed bottom-0 left-0 right-0 z-30">
-        <div className="bg-[#072417] border-t border-[#1b5b3a] py-2.5 px-4 sm:px-8 shadow-[0_-4px_24px_rgba(0,0,0,0.35)] flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl overflow-hidden relative border border-[#ffd978]/40 shrink-0 bg-white">
+      {/* ── 11. DYNAMIC STICKY PURCHASE BAR (Mobile Responsive + Safe Area + Quick Variant Switcher) ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#072417]/95 backdrop-blur-md border-t border-[#1b5b3a]/90 shadow-[0_-4px_30px_rgba(0,0,0,0.45)]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-2 sm:pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-2 sm:gap-4">
+          
+          {/* Left: Product Thumbnail & Variant Switcher */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl overflow-hidden relative border border-[#ffd978]/40 shrink-0 bg-white">
               <Image
                 src={PRODUCT.image}
                 alt="GHRITKALASH A2 Cow Ghee"
                 fill
                 className="object-contain p-0.5"
+                sizes="44px"
               />
             </div>
-            <div>
-              <p className="text-xs font-bold text-white leading-tight">GHRITKALASH A2 Cow Ghee</p>
-              <p className="text-[10.5px] text-[#ffd978]">
-                {selectedVariant.label} &bull; Danedar Bilona
+            <div className="min-w-0 flex flex-col justify-center">
+              <p className="text-[11px] sm:text-xs font-bold text-white leading-tight truncate max-w-[110px] xs:max-w-[150px] sm:max-w-[220px]">
+                GHRITKALASH A2 Ghee
               </p>
+              
+              {/* Quick Variant Switcher Pills */}
+              <div className="flex items-center gap-1 mt-1">
+                {PRODUCT.variants.map((v) => {
+                  const isCur = selectedVariant.id === v.id;
+                  return (
+                    <button
+                      key={v.id}
+                      type="button"
+                      onClick={() => setSelectedVariant(v)}
+                      aria-label={`Select ${v.size}`}
+                      className={`text-[9.5px] sm:text-[10.5px] font-bold px-1.5 sm:px-2 py-0.5 rounded transition-all ${
+                        isCur
+                          ? "bg-[#ffd978] text-[#072417] shadow-xs"
+                          : "bg-[#103a25] text-[#b4d8c2] hover:bg-[#165033] hover:text-white"
+                      }`}
+                    >
+                      {v.size}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="text-right">
-              <span className="text-sm sm:text-base font-black text-[#ffd978]">
+          {/* Right: Dynamic Pricing & Action Button */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            <div className="text-right leading-tight">
+              <span className="text-sm sm:text-base font-black text-[#ffd978] block sm:inline">
                 {formatINR(selectedVariant.price)}
               </span>
-              <span className="text-[10px] sm:text-xs text-[#7bb894] line-through ml-1.5">
+              <span className="text-[9.5px] sm:text-xs text-[#7bb894] line-through sm:ml-1.5">
                 {formatINR(selectedVariant.mrp)}
               </span>
             </div>
 
             <button
               onClick={handleAddToCart}
-              className="btn-anveshan-gold px-5 sm:px-7 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-md flex items-center gap-2 active:scale-95"
+              className="btn-anveshan-gold px-3.5 sm:px-6 py-2.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider shadow-md flex items-center gap-1.5 sm:gap-2 active:scale-95 shrink-0"
+              aria-label="Order GHRITKALASH A2 Cow Ghee"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#072417]" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#072417] shrink-0" />
               <span>{addedToCart ? "Added!" : "Order Now"}</span>
             </button>
           </div>

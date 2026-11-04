@@ -46,9 +46,9 @@ export default function Navbar({ onOrderClick }) {
   return (
     <>
       {/* ── Top Announcement Ticker ──────────────────────────────────────── */}
-      <div className="bg-[#0b3b24] text-white text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-center">
-          <span className="text-[12px] font-medium tracking-wide text-[#d4eadc] text-center">
+      <div className="bg-[#0b3b24] text-white text-xs py-1.5 sm:py-2 px-3 sm:px-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-center text-center">
+          <span className="text-[10.5px] sm:text-[12px] font-medium tracking-wide text-[#d4eadc] truncate">
             {ANNOUNCEMENTS[announcementIndex]}
           </span>
         </div>
@@ -60,7 +60,7 @@ export default function Navbar({ onOrderClick }) {
           scrolled ? "shadow-sm" : ""
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-[68px] flex items-center justify-between gap-2 sm:gap-4">
 
           {/* Hamburger – Mobile */}
           <button

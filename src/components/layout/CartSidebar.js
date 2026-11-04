@@ -176,7 +176,7 @@ export default function CartSidebar() {
 
         {/* Footer Checkout Area */}
         {items.length > 0 && (
-          <div className="px-6 py-5 border-t border-[#ebdcc4] bg-white space-y-3 shadow-[0_-4px_16px_rgba(0,0,0,0.04)]">
+          <div className="px-5 sm:px-6 py-4 sm:py-5 border-t border-[#ebdcc4] bg-white space-y-3 shadow-[0_-4px_16px_rgba(0,0,0,0.04)] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <div className="flex items-center justify-between text-xs text-[#736350]">
               <span>Subtotal ({totalQty} item{totalQty !== 1 ? "s" : ""})</span>
               <span className="font-bold text-[#142d1f] text-sm">{formatINR(subtotal)}</span>

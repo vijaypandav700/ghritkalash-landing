@@ -35,27 +35,27 @@ export default function BilonaModal({ isOpen, onClose, onShopNow }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-labelledby="bilona-modal-title"
     >
-      <div className="bg-[#fcfaf5] border border-[#ebdcc4] max-w-2xl w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-[#fcfaf5] border border-[#ebdcc4] max-w-2xl w-full rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#ebdcc4]/60 text-[#493e32] transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full hover:bg-[#ebdcc4]/60 text-[#493e32] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="text-center mb-6">
-          <span className="text-[11px] font-bold tracking-[0.25em] text-[#c69324] uppercase">
+        <div className="text-center mb-5 sm:mb-6">
+          <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] text-[#c69324] uppercase">
             Traditional Method
           </span>
           <h3
             id="bilona-modal-title"
-            className="font-serif text-2xl sm:text-3xl text-[#142d1f] font-bold mt-1"
+            className="font-serif text-xl sm:text-3xl text-[#142d1f] font-bold mt-1"
           >
             The Traditional Bilona Method
           </h3>
@@ -64,26 +64,26 @@ export default function BilonaModal({ isOpen, onClose, onShopNow }) {
           </p>
         </div>
 
-        <ol className="space-y-3.5">
+        <ol className="space-y-3">
           {STEPS.map((step) => (
             <li
               key={step.n}
-              className="flex gap-4 p-4 rounded-2xl bg-white border border-[#ebdcc4] shadow-sm"
+              className="flex gap-3.5 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-[#ebdcc4] shadow-xs"
             >
-              <div className="w-8 h-8 rounded-xl bg-[#0b3b24] text-[#ffd978] flex items-center justify-center shrink-0 font-bold text-xs">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#0b3b24] text-[#ffd978] flex items-center justify-center shrink-0 font-bold text-xs">
                 {step.n}
               </div>
               <div>
-                <h4 className="font-bold text-sm text-[#142d1f]">{step.title}</h4>
+                <h4 className="font-bold text-xs sm:text-sm text-[#142d1f]">{step.title}</h4>
                 <p className="text-xs text-[#6e6152] leading-relaxed mt-0.5">{step.desc}</p>
               </div>
             </li>
           ))}
         </ol>
 
-        <div className="mt-6 pt-5 border-t border-[#ebdcc4] flex items-center justify-between">
+        <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-[#ebdcc4] flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 text-xs text-[#09733c] font-semibold">
-            <ShieldCheck className="w-4 h-4" />
+            <ShieldCheck className="w-4 h-4 shrink-0" />
             <span>Lab-Tested &bull; Unsalted &bull; Pure</span>
           </div>
 
@@ -92,7 +92,7 @@ export default function BilonaModal({ isOpen, onClose, onShopNow }) {
               onClose();
               onShopNow?.();
             }}
-            className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider btn-anveshan-primary text-[#fce8a9] flex items-center gap-2"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider btn-anveshan-primary text-[#fce8a9] flex items-center justify-center gap-2"
           >
             <span>Order Pure Ghee</span>
             <ArrowRight className="w-3.5 h-3.5 text-[#ffd978]" />
