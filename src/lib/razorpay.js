@@ -22,6 +22,25 @@ export async function loadRazorpayScript() {
 }
 
 /**
+ * Verify the payment signature on the server.
+ *
+ * @param {object} response - Razorpay handler response
+ * @returns {{ success: boolean, message: string }}
+ */
+async function verifyPayment(response) {
+  const res = await fetch("/api/verify-payment", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      razorpay_order_id: response.razorpay_order_id,
+      razorpay_payment_id: response.razorpay_payment_id,
+      razorpay_signature: response.razorpay_signature,
+    }),
+  });
+  return res.json();
+}
+
+/**
  * Initiate a Razorpay checkout session.
  *
  * @param {object} params
@@ -68,17 +87,26 @@ export async function initiateRazorpayCheckout({ cartItems, onSuccess, onFailure
     currency: orderData.currency,
     name: "GHRITKALASH",
     description: "Pure A2 Cow Ghee – Vedic Bilona Method",
-    order_id: orderData.orderId,
-    handler(response) {
-      onSuccess?.(response);
+    order_id: orderData.order_id,
+    async handler(response) {
+      try {
+        const result = await verifyPayment(response);
+        if (result.success) {
+          onSuccess?.(response);
+        } else {
+          onFailure?.(result.message || "Payment verification failed.");
+        }
+      } catch {
+        onFailure?.("Payment verification request failed. Please contact support.");
+      }
     },
     prefill: { name: "", email: "", contact: "" },
     theme: { color: "#0f2e20" },
   };
 
   const rzp = new window.Razorpay(options);
-  rzp.on("payment.failed", () => {
-    onFailure?.("Payment failed. Please try again.");
+  rzp.on("payment.failed", (resp) => {
+    onFailure?.(resp.error?.description || "Payment failed. Please try again.");
   });
   rzp.open();
 }
