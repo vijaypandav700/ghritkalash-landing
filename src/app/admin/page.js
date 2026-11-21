@@ -43,6 +43,7 @@ export default function AdminPage() {
 
   // Status updating state in drawer
   const [savingStatus, setSavingStatus] = useState(false);
+  const [bookingShiprocket, setBookingShiprocket] = useState(false);
   const [newStatus, setNewStatus] = useState("");
   const [newAwb, setNewAwb] = useState("");
   const [newCourier, setNewCourier] = useState("");
@@ -161,6 +162,32 @@ export default function AdminPage() {
       alert("Failed to update order status");
     } finally {
       setSavingStatus(false);
+    }
+  }
+
+  async function handleShiprocketBooking() {
+    if (!selectedOrder) return;
+    setBookingShiprocket(true);
+    try {
+      const res = await fetch("/api/admin/shiprocket", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderNumber: selectedOrder.orderNumber }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        alert(`Shiprocket Order Created! AWB: ${data.shipment?.awbNumber}`);
+        fetchOrders();
+        setSelectedOrder(data.order || selectedOrder);
+        setNewAwb(data.shipment?.awbNumber || "");
+        setNewCourier(data.shipment?.courier || "");
+      } else {
+        alert(data.message || "Shiprocket booking failed");
+      }
+    } catch {
+      alert("Error contacting Shiprocket API");
+    } finally {
+      setBookingShiprocket(false);
     }
   }
 
@@ -763,6 +790,32 @@ export default function AdminPage() {
                     Razorpay Order ID: {selectedOrder.razorpayOrderId}
                   </p>
                 )}
+              </div>
+
+              {/* Shiprocket 1-Click Dispatch */}
+              <div className="bg-[#eef7f1] rounded-2xl p-4 border border-[#cde5d6] space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-[#0b3b24] font-bold text-sm">
+                    <Truck className="w-4 h-4" />
+                    <span>Shiprocket Automated Dispatch</span>
+                  </div>
+                  <span className="text-[10px] bg-[#0b3b24] text-[#ffd978] px-2 py-0.5 rounded-full font-extrabold uppercase">
+                    Live API
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#524434] leading-relaxed">
+                  Automatically push this order to Shiprocket, calculate jar parcel dimensions, assign fastest courier (BlueDart/Delhivery), and generate live AWB.
+                </p>
+                <button
+                  onClick={handleShiprocketBooking}
+                  disabled={bookingShiprocket || selectedOrder.paymentStatus !== "PAID"}
+                  className="w-full py-2.5 rounded-xl bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider hover:bg-emerald-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <Truck className="w-4 h-4" />
+                  <span>
+                    {bookingShiprocket ? "Connecting Shiprocket…" : "Push to Shiprocket & Generate AWB"}
+                  </span>
+                </button>
               </div>
 
               {/* Fulfillment & Tracking Updater */}
