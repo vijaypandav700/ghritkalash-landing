@@ -30,14 +30,18 @@ async function verifyPayment(response) {
   return res.json();
 }
 
-export async function initiateRazorpayCheckout({ cartItems, onSuccess, onFailure }) {
+export async function initiateRazorpayCheckout({
+  cartItems,
+  customerDetails,
+  pricing,
+  onSuccess,
+  onFailure,
+}) {
   const loaded = await loadRazorpayScript();
   if (!loaded) {
-    onFailure?.("Failed to load the payment gateway. Please check your internet connection.");
+    onFailure?.("Failed to load payment gateway. Please check your internet connection.");
     return;
   }
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   let orderData;
   try {
@@ -45,14 +49,9 @@ export async function initiateRazorpayCheckout({ cartItems, onSuccess, onFailure
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: Math.round(subtotal * 100), // Razorpay expects paise
-        currency: "INR",
-        receipt: `gk_${Date.now()}`,
-        notes: {
-          items: cartItems
-            .map((i) => `${i.name} (${i.variantLabel}) ×${i.qty}`)
-            .join(", "),
-        },
+        items: cartItems,
+        customer: customerDetails,
+        pricing,
       }),
     });
 
@@ -78,11 +77,19 @@ export async function initiateRazorpayCheckout({ cartItems, onSuccess, onFailure
     name: "GHRITKALASH",
     description: "Pure A2 Cow Ghee – Vedic Bilona Method",
     order_id: orderId,
+    prefill: {
+      name: customerDetails?.name || "",
+      email: customerDetails?.email || "",
+      contact: customerDetails?.phone || "",
+    },
+    theme: {
+      color: "#0b3b24",
+    },
     async handler(response) {
       try {
         const result = await verifyPayment(response);
         if (result.success) {
-          onSuccess?.(response);
+          onSuccess?.(result.order || response);
         } else {
           onFailure?.(result.message || "Payment verification failed.");
         }
@@ -90,8 +97,6 @@ export async function initiateRazorpayCheckout({ cartItems, onSuccess, onFailure
         onFailure?.("Payment verification request failed. Please contact support.");
       }
     },
-    prefill: { name: "", email: "", contact: "" },
-    theme: { color: "#0f2e20" },
   };
 
   const rzp = new window.Razorpay(options);
