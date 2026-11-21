@@ -146,19 +146,37 @@ export async function createShiprocketOrder(order) {
   const shipmentId = data.shipment_id;
   const orderId = data.order_id;
 
-  // Attempt to assign AWB immediately
+  // 1. Attempt to find the best courier for this route and assign AWB immediately
   let awbCode = data.awb_code || null;
   let courierName = data.courier_name || null;
+  let assignmentError = null;
 
   if (!awbCode && shipmentId) {
     try {
-      const awbRes = await assignShiprocketAwb(shipmentId, token);
-      if (awbRes) {
+      const destinationPincode = order.customer.pincode || "411015";
+      const pickupPincode = process.env.SHIPROCKET_PICKUP_PINCODE || "411068";
+      const recommended = await getRecommendedCourier(
+        pickupPincode,
+        destinationPincode,
+        parcel.weight,
+        token
+      );
+
+      const courierId = recommended?.courier_company_id || null;
+      if (recommended?.courier_name) {
+        courierName = recommended.courier_name;
+      }
+
+      const awbRes = await assignShiprocketAwb(shipmentId, courierId, token);
+      if (awbRes && awbRes.awb_code) {
         awbCode = awbRes.awb_code;
-        courierName = awbRes.courier_name;
+        courierName = awbRes.courier_name || courierName;
+      } else if (awbRes?.errorReason) {
+        assignmentError = awbRes.errorReason;
       }
     } catch (awbErr) {
-      console.warn("Could not auto-assign AWB immediately, will remain pending in Shiprocket:", awbErr.message);
+      assignmentError = awbErr.message;
+      console.warn("Could not auto-assign AWB immediately:", awbErr.message);
     }
   }
 
@@ -166,21 +184,53 @@ export async function createShiprocketOrder(order) {
     shipmentId,
     orderId,
     awbNumber: awbCode || "PENDING_PICKUP_ASSIGNMENT",
-    courier: courierName || "Shiprocket Smart Express",
+    courier: courierName || "Shiprocket Express (Pending Allocation)",
     trackingUrl: awbCode
       ? `https://shiprocket.co/tracking/${awbCode}`
-      : "https://shiprocket.co/tracking",
+      : "https://app.shiprocket.in/orders",
     status: awbCode ? "SHIPPED" : "PROCESSING",
     packagingType: "Shock-absorbing Honeycomb Protective Wrap",
     liveIntegration: true,
+    shiprocketNote: assignmentError || null,
   };
+}
+
+/**
+ * Query Shiprocket Serviceability to find the best available courier
+ */
+export async function getRecommendedCourier(pickupPincode, deliveryPincode, weightKg, token) {
+  try {
+    const url = `${SHIPROCKET_API_BASE}/courier/serviceability/?pickup_postcode=${pickupPincode}&delivery_postcode=${deliveryPincode}&weight=${weightKg}&cod=0`;
+    const res = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const couriers = data.data?.available_courier_companies || [];
+    if (couriers.length > 0) {
+      // Sort by lowest shipping rate among couriers with high delivery performance
+      couriers.sort((a, b) => Number(a.rate || 999) - Number(b.rate || 999));
+      return couriers[0];
+    }
+  } catch (err) {
+    console.warn("Shiprocket serviceability lookup warning:", err.message);
+  }
+  return null;
 }
 
 /**
  * Assign AWB Courier
  */
-export async function assignShiprocketAwb(shipmentId, existingToken = null) {
+export async function assignShiprocketAwb(shipmentId, courierId = null, existingToken = null) {
   const token = existingToken || (await getShiprocketAuthToken());
+
+  const payload = { shipment_id: shipmentId };
+  if (courierId) {
+    payload.courier_id = courierId;
+  }
 
   const res = await fetch(`${SHIPROCKET_API_BASE}/courier/assign/awb`, {
     method: "POST",
@@ -188,12 +238,18 @@ export async function assignShiprocketAwb(shipmentId, existingToken = null) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ shipment_id: shipmentId }),
+    body: JSON.stringify(payload),
   });
 
   const data = await res.json();
   if (!res.ok || data.status_code === 400) {
-    return null;
+    const msg = data.message || data.response?.data?.error || "AWB assignment pending";
+    console.warn("[SHIPROCKET AWB PENDING]", msg);
+    return {
+      awb_code: null,
+      courier_name: null,
+      errorReason: msg,
+    };
   }
 
   const r = data.response?.data;

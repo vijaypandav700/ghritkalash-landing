@@ -55,7 +55,22 @@ export async function POST(request) {
         .eq("order_number", orderNumber);
     }
 
-    return NextResponse.json({ success: true, shipment: updatedShipment, order: updated });
+    const noteMsg =
+      updatedShipment.awbNumber &&
+      updatedShipment.awbNumber !== "PENDING_PICKUP_ASSIGNMENT"
+        ? `AWB Generated: ${updatedShipment.awbNumber} (${updatedShipment.courier})`
+        : `Order pushed to Shiprocket (Shipment #${updatedShipment.shipmentId}). ${
+            updatedShipment.shiprocketNote
+              ? "Note: " + updatedShipment.shiprocketNote
+              : "Recharge your Shiprocket wallet (min ₹500) or click 'Ship Now' in Shiprocket to choose courier."
+          }`;
+
+    return NextResponse.json({
+      success: true,
+      shipment: updatedShipment,
+      order: updated,
+      message: noteMsg,
+    });
   } catch (err) {
     console.error("Admin Shiprocket dispatch error:", err);
     return NextResponse.json(
