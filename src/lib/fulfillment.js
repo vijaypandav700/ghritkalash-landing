@@ -1,4 +1,4 @@
-import { updateOrderShipment } from "./orders";
+import { updateOrderShipment } from "./orders.js";
 
 /**
  * Logistics & Fulfilment Service

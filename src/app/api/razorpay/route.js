@@ -78,8 +78,13 @@ export async function POST(request) {
   } catch (error) {
     console.error("Razorpay order creation failed:", error);
     const status = error.statusCode === 401 ? 401 : 500;
+    const errorMessage =
+      error.error?.description ||
+      error.description ||
+      error.message ||
+      "Failed to create order";
     return Response.json(
-      { error: "Failed to create order", message: error.message },
+      { error: "Failed to create order", message: errorMessage, details: error.error || null },
       { status }
     );
   }

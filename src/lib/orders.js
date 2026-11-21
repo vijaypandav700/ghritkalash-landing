@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { supabase, isSupabaseConfigured } from "./supabase";
+import { supabase, isSupabaseConfigured } from "./supabase.js";
 
 /**
  * Order Storage Layer
