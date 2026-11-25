@@ -1,5 +1,6 @@
 import { updateOrderShipment } from "./orders.js";
 import { isShiprocketConfigured, createShiprocketOrder } from "./shiprocket.js";
+import { sendAdminWhatsAppNotification } from "./whatsapp.js";
 
 /**
  * Logistics & Fulfilment Service
@@ -93,10 +94,16 @@ export async function dispatchOrderNotifications(order) {
   console.log(`[FULFILLMENT] Triggering notifications for Order #${orderNumber}`);
   console.log(`[CUSTOMER NOTIFIED] Email to ${customer?.email}, WhatsApp to ${customer?.phone}`);
   console.log(
-    `[WAREHOUSE ALERT] Pack ${(items || []).length} item(s) for delivery to ${customer?.city}, ${
-      customer?.pincode
+    `[WAREHOUSE ALERT] Pack ${(items || []).length} item(s) for delivery to ${customer?.city}, ${customer?.pincode
     }`
   );
+
+  // Trigger WhatsApp order alert to Store Owner
+  try {
+    await sendAdminWhatsAppNotification(order);
+  } catch (waErr) {
+    console.error("[WHATSAPP ALERT FAILED]", waErr.message);
+  }
 
   if (process.env.RESEND_API_KEY) {
     try {
@@ -110,4 +117,5 @@ export async function dispatchOrderNotifications(order) {
     emailSent: true,
     smsOrWhatsappSent: true,
   };
+
 }

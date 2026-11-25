@@ -44,6 +44,7 @@ export default function AdminPage() {
   // Status updating state in drawer
   const [savingStatus, setSavingStatus] = useState(false);
   const [bookingShiprocket, setBookingShiprocket] = useState(false);
+  const [sendingTestWa, setSendingTestWa] = useState(false);
   const [newStatus, setNewStatus] = useState("");
   const [newAwb, setNewAwb] = useState("");
   const [newCourier, setNewCourier] = useState("");
@@ -106,6 +107,19 @@ export default function AdminPage() {
       setOrders([]);
     } catch {
       setIsAuthenticated(false);
+    }
+  }
+
+  async function handleTestWhatsApp() {
+    setSendingTestWa(true);
+    try {
+      const res = await fetch("/api/admin/whatsapp", { method: "POST" });
+      const data = await res.json();
+      alert(data.message || (data.success ? "WhatsApp alert sent!" : "Failed to send"));
+    } catch {
+      alert("Error sending WhatsApp notification");
+    } finally {
+      setSendingTestWa(false);
     }
   }
 
@@ -360,7 +374,17 @@ export default function AdminPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleTestWhatsApp}
+              disabled={sendingTestWa}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-xs font-semibold text-[#ffd978] transition-colors border border-emerald-500/30"
+              title="Send a sample WhatsApp alert to store owner phone"
+            >
+              <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{sendingTestWa ? "Sending…" : "Test WhatsApp Alert"}</span>
+            </button>
+
             <button
               onClick={() => fetchOrders()}
               disabled={loadingOrders}
